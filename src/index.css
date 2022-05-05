@@ -7,6 +7,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.formulario {
+	min-width: 600px;
+	margin-top: 50px;
+	background: #fff;
+	border-radius: 5px;
+	padding: 20px;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
