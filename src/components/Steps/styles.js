@@ -24,5 +24,7 @@ export const StepsContainer = styled.div`
     height: 40px;
     justify-content: center;
     width: 40px;
+
   }
 `;
+

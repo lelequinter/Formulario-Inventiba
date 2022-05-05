@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
-import { Steps } from "./Steps/Steps";
+import { Steps } from "../Steps/Steps";
 import {
   Container,
   StyledTitle,
   DivForm,
   ButtonsSection,
   Button,
-} from "../styles/styles";
+} from "./styles";
 
 export const Formulario = () => {
+    const [step, setStep] = useState(1);
   return (
     <Container>
       <StyledTitle>
@@ -20,7 +21,7 @@ export const Formulario = () => {
           y certificado bancario.
         </h2>
       </StyledTitle>
-      <Steps />
+      <Steps step={step} setStep={setStep}/>
       <Formik>
         {() => (
           <Form>

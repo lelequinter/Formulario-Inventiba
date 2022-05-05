@@ -1,13 +1,15 @@
-import React from 'react'
-import { StepsContainer } from './styles'
+import React from "react";
+import { StepsContainer } from "./styles";
+import './styles.css'
 
-export const Steps = () => {
+export const Steps = ({ step, setStep }) => {
+    console.log(step);
   return (
     <StepsContainer>
-        <p>Paso</p>
-        <span>1</span>
-        <span>2</span>
-        <span>3</span>
+      <p>Paso</p>
+      <span className={`${step === 1 ? "step" : ""}`}>1</span>
+      <span className={`${step === 2 ? "step" : ""}`}>2</span>
+      <span className={`${step === 3 ? "step" : ""}`}>3</span>
     </StepsContainer>
-  )
-}
+  );
+};
