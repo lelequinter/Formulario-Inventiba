@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import { Steps } from "./Steps/Steps";
 import {
   Container,
   StyledTitle,
@@ -8,7 +9,6 @@ import {
   ButtonsSection,
   Button,
 } from "../styles/styles";
-import "../index.css";
 
 export const Formulario = () => {
   return (
@@ -20,6 +20,7 @@ export const Formulario = () => {
           y certificado bancario.
         </h2>
       </StyledTitle>
+      <Steps />
       <Formik>
         {() => (
           <Form>
@@ -74,10 +75,10 @@ export const Formulario = () => {
                 placeholder="Telefono"
               />
               <ButtonsSection>
-                  <Button>
-                      <FaChevronLeft/>
-                      <p>Anterior</p>
-                  </Button>
+                <Button>
+                  <FaChevronLeft />
+                  <p>Anterior</p>
+                </Button>
                 <Button>
                   <p>Siguiente</p>
                   <FaChevronRight />
