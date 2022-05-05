@@ -6,6 +6,7 @@ export const Container = styled.div`
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  height: 782px;
   margin-left: 15%;
   margin-right: 15%;
   margin-top: 30px;
@@ -90,4 +91,9 @@ export const Button = styled.button`
     border-width: 1px;
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
   }
+`;
+
+export const VoidDiv = styled.div`
+  width: 100px;
+  height: 39px;
 `;

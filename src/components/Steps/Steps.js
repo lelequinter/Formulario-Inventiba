@@ -2,8 +2,7 @@ import React from "react";
 import { StepsContainer } from "./styles";
 import './styles.css'
 
-export const Steps = ({ step, setStep }) => {
-    console.log(step);
+export const Steps = ({ step }) => {
   return (
     <StepsContainer>
       <p>Paso</p>
