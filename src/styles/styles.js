@@ -64,6 +64,11 @@ export const StyledTitle = styled.div`
   }
 `;
 
+export const ButtonsSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const Button = styled.button`
   align-items: center;
   background: #00a3ff;
@@ -75,8 +80,8 @@ export const Button = styled.button`
   cursor: pointer;
   font-size: 15px;
   height: 35px;
-  justify-content: center;
-  width: 120px;
+  justify-content: space-around;
+  width: 150px;
 
   &:hover,
   &:focus,

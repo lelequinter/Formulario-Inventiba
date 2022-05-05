@@ -1,7 +1,13 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import { FaChevronRight } from "react-icons/fa";
-import { Container, StyledTitle, DivForm, Button } from "../styles/styles";
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import {
+  Container,
+  StyledTitle,
+  DivForm,
+  ButtonsSection,
+  Button,
+} from "../styles/styles";
 import "../index.css";
 
 export const Formulario = () => {
@@ -10,8 +16,8 @@ export const Formulario = () => {
       <StyledTitle>
         <h1>Nuevo Colaborador</h1>
         <h2>
-          Ingresa los datos a continuación, incluyendo hoja de vida,
-          portafolioycertificado bancario.
+          Ingresa los datos a continuación, incluyendo hoja de vida, portafolio
+          y certificado bancario.
         </h2>
       </StyledTitle>
       <Formik>
@@ -67,10 +73,16 @@ export const Formulario = () => {
                 name="telefono"
                 placeholder="Telefono"
               />
-              <Button>
-                <p>Siguiente</p>
-                <FaChevronRight/>
-              </Button>
+              <ButtonsSection>
+                  <Button>
+                      <FaChevronLeft/>
+                      <p>Anterior</p>
+                  </Button>
+                <Button>
+                  <p>Siguiente</p>
+                  <FaChevronRight />
+                </Button>
+              </ButtonsSection>
             </DivForm>
           </Form>
         )}
