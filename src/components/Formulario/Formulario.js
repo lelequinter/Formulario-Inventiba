@@ -31,15 +31,47 @@ export const Formulario = () => {
           y certificado bancario.
         </h2>
       </StyledTitle>
-      <Steps step={step}/>
-      <Formik>
-        {() => (
-          <Form>
+      <Steps step={step} />
+      <Formik
+        initialValues={{
+          correo: "",
+          cedula: "",
+          nombres: "",
+          apellidos: "",
+          emailcorp: "",
+          emailalt: "",
+          skype: "",
+          direccion: "",
+          telefono: "",
+          celular: "",
+          fechaIngreso: "",
+          fechaRetiro: "",
+          ciudadNacimiento: "",
+          personaContacto: "",
+          parentezcoContacto: "",
+          telefonoContacto: "",
+          eps: "",
+          pension: "",
+          cajaCompensacion: "",
+          salarioReal: "",
+          salarioCotizado: "",
+          numeroCuenta: "",
+          tipoCuenta: "",
+          certificadoBancario: "",
+          tipoContratacion: "",
+          vinculado: "",
+        }}
+        onSubmit={() => {
+          console.log("Formulario enviado");
+        }}
+      >
+        {({ handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
             <DivForm>
               {step === 1 && (
                 <>
                   <Field
-                    type="text"
+                    type="email"
                     id="correo"
                     name="correo"
                     placeholder="Correo"
@@ -63,15 +95,15 @@ export const Formulario = () => {
                     placeholder="Apellidos"
                   />
                   <Field
-                    type="text"
-                    id="email-corp"
-                    name="email-corp"
+                    type="email"
+                    id="emailcorp"
+                    name="emailcorp"
                     placeholder="Email Corporativo"
                   />
                   <Field
-                    type="text"
-                    id="email-alt"
-                    name="email-alt"
+                    type="email"
+                    id="emailalt"
+                    name="emailalt"
                     placeholder="Email Alternativo"
                   />
                   <Field
@@ -104,38 +136,38 @@ export const Formulario = () => {
                   />
                   <Field
                     type="text"
-                    id="fecha-ingreso"
-                    name="fecha-ingreso"
+                    id="fechaIngreso"
+                    name="fechaIngreso"
                     placeholder="Fecha de Ingreso"
                   />
                   <Field
                     type="text"
-                    id="fecha-retiro"
-                    name="fecha-retiro"
+                    id="fechaRetiro"
+                    name="fechaRetiro"
                     placeholder="Fecha de Retiro"
                   />
                   <Field
                     type="text"
-                    id="ciudad-nacimiento"
-                    name="ciudad-nacimiento"
+                    id="ciudadNacimiento"
+                    name="ciudadNacimiento"
                     placeholder="Ciudad de Nacimiento"
                   />
                   <Field
                     type="text"
-                    id="persona-contacto"
-                    name="persona-contacto"
+                    id="personaContacto"
+                    name="personaContacto"
                     placeholder="Persona de Contacto"
                   />
                   <Field
                     type="text"
-                    id="parentezco-contacto"
-                    name="parentezco-contacto"
+                    id="parentezcoContacto"
+                    name="parentezcoContacto"
                     placeholder="Parentezco con el Contacto"
                   />
                   <Field
                     type="text"
-                    id="telefono-contacto"
-                    name="telefono-contacto"
+                    id="telefonoContacto"
+                    name="telefonoContacto"
                     placeholder="Telefono del Contacto"
                   />
                   <Field type="text" id="eps" name="eps" placeholder="EPS" />
@@ -151,44 +183,44 @@ export const Formulario = () => {
                 <>
                   <Field
                     type="text"
-                    id="caja-compensacion"
-                    name="caja-compensacion"
+                    id="cajaCompensacion"
+                    name="cajaCompensacion"
                     placeholder="Caja de Compensacion"
                   />
                   <Field
                     type="text"
-                    id="salario-real"
-                    name="salario-real"
+                    id="salarioReal"
+                    name="salarioReal"
                     placeholder="Salario Real"
                   />
                   <Field
                     type="text"
-                    id="salario-cotizado"
-                    name="salario-cotizado"
+                    id="salarioCotizado"
+                    name="salarioCotizado"
                     placeholder="Salario Cotizado"
                   />
                   <Field
                     type="text"
-                    id="numero-cuenta"
-                    name="numero-cuenta"
+                    id="numeroCuenta"
+                    name="numeroCuenta"
                     placeholder="Número de Cuenta Bancaria"
                   />
                   <Field
                     type="text"
-                    id="tipo-cuenta"
-                    name="tipo-cuenta"
+                    id="tipoCuenta"
+                    name="tipoCuenta"
                     placeholder="Tipo de Cuenta"
                   />
                   <Field
                     type="text"
-                    id="certificado-bancario"
-                    name="certificado-bancario"
+                    id="certificadoBancario"
+                    name="certificadoBancario"
                     placeholder="Certificado Bancario"
                   />
                   <Field
                     type="text"
-                    id="tipo-contratacion"
-                    name="tipo-contratacion"
+                    id="tipoContratacion"
+                    name="tipoContratacion"
                     placeholder="Tipo de Contratación"
                   />
                   <Field
@@ -210,9 +242,13 @@ export const Formulario = () => {
                     <p>Anterior</p>
                   </Button>
                 )}
-                <Button type="button" onClick={() => {handleSiguiente()}}>
-                  {step === 3 ? <p>Guardar</p> : <><p>Siguiente</p> <FaChevronRight /></> }
-                </Button>
+                {step === 3 ? (
+                  <Button type="submit">Guardar</Button>
+                ) : (
+                  <Button type="button" onClick={handleSiguiente}>
+                    <p>Siguiente</p> <FaChevronRight />
+                  </Button>
+                )}
               </ButtonsSection>
             </DivForm>
           </Form>
