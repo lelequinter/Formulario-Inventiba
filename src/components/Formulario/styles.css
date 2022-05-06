@@ -1,0 +1,11 @@
+.oculto{
+    margin-left: 332.64px;
+    position: absolute;
+    z-index: 1;
+}
+
+.mostrado{
+    margin-left: 332.64px;
+    position: absolute;
+    z-index: 10;
+}

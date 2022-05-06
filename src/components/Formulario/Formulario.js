@@ -10,6 +10,7 @@ import {
   Button,
   VoidDiv,
 } from "./styles";
+import "./styles.css";
 
 export const Formulario = () => {
   const [step, setStep] = useState(1);
@@ -61,11 +62,11 @@ export const Formulario = () => {
           tipoContratacion: "",
           vinculado: "",
         }}
-        onSubmit={() => {
-          console.log("Formulario enviado");
+        onSubmit={(valores) => {
+          console.log(valores);
         }}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, touched }) => (
           <Form onSubmit={handleSubmit}>
             <DivForm>
               {step === 1 && (
@@ -242,13 +243,30 @@ export const Formulario = () => {
                     <p>Anterior</p>
                   </Button>
                 )}
-                {step === 3 ? (
-                  <Button type="submit">Guardar</Button>
+                <>
+                  {step === 3 && (
+                    <Button
+                      className={`${step === 3 && "mostrado"}`}
+                      type="submit"
+                    >
+                      Guardar
+                    </Button>
+                  )}
+                  <Button
+                    className={`${step === 3 && "oculto"}`}
+                    type="button"
+                    onClick={handleSiguiente}
+                  >
+                    <p>Siguiente</p> <FaChevronRight />
+                  </Button>
+                </>
+                {/* {step === 3 ? (
+                  <Button className="" type="submit">Guardar</Button>
                 ) : (
                   <Button type="button" onClick={handleSiguiente}>
                     <p>Siguiente</p> <FaChevronRight />
                   </Button>
-                )}
+                )} */}
               </ButtonsSection>
             </DivForm>
           </Form>
