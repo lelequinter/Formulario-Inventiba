@@ -10,7 +10,6 @@ import {
   Button,
   VoidDiv,
 } from "./styles";
-import "./styles.css";
 
 export const Formulario = () => {
   const [step, setStep] = useState(1);
@@ -62,11 +61,12 @@ export const Formulario = () => {
           tipoContratacion: "",
           vinculado: "",
         }}
-        onSubmit={(valores) => {
+        onSubmit={(valores, { resetForm }) => {
           console.log(valores);
+          resetForm();
         }}
       >
-        {({ handleSubmit, touched }) => (
+        {({ handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
             <DivForm>
               {step === 1 && (
@@ -136,16 +136,18 @@ export const Formulario = () => {
                     placeholder="Celular"
                   />
                   <Field
-                    type="text"
                     id="fechaIngreso"
                     name="fechaIngreso"
                     placeholder="Fecha de Ingreso"
+                    onFocus={(e) => (e.target.type = "date")}
+                    onBlur={(e) => (e.target.type = "text")}
                   />
                   <Field
-                    type="text"
                     id="fechaRetiro"
                     name="fechaRetiro"
                     placeholder="Fecha de Retiro"
+                    onFocus={(e) => (e.target.type = "date")}
+                    onBlur={(e) => (e.target.type = "text")}
                   />
                   <Field
                     type="text"
@@ -213,10 +215,12 @@ export const Formulario = () => {
                     placeholder="Tipo de Cuenta"
                   />
                   <Field
-                    type="text"
+                    type="file"
                     id="certificadoBancario"
                     name="certificadoBancario"
                     placeholder="Certificado Bancario"
+                    // onFocus={(e) => (e.target.type = "file")}
+                    // onBlur={(e) => (e.target.type = "text")}
                   />
                   <Field
                     type="text"
@@ -244,29 +248,13 @@ export const Formulario = () => {
                   </Button>
                 )}
                 <>
-                  {step === 3 && (
-                    <Button
-                      className={`${step === 3 && "mostrado"}`}
-                      type="submit"
-                    >
-                      Guardar
+                  {step === 3 && <Button type="submit">Guardar</Button>}
+                  {step !== 3 && (
+                    <Button type="button" onClick={handleSiguiente}>
+                      <p>Siguiente</p> <FaChevronRight />
                     </Button>
                   )}
-                  <Button
-                    className={`${step === 3 && "oculto"}`}
-                    type="button"
-                    onClick={handleSiguiente}
-                  >
-                    <p>Siguiente</p> <FaChevronRight />
-                  </Button>
                 </>
-                {/* {step === 3 ? (
-                  <Button className="" type="submit">Guardar</Button>
-                ) : (
-                  <Button type="button" onClick={handleSiguiente}>
-                    <p>Siguiente</p> <FaChevronRight />
-                  </Button>
-                )} */}
               </ButtonsSection>
             </DivForm>
           </Form>
