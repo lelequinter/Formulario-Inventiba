@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { Steps } from "../Steps/Steps";
+import './styles.css'
 import {
   Wrapper,
   Container,
@@ -15,6 +16,8 @@ import {
 
 export const Formulario = () => {
   const [step, setStep] = useState(1);
+  const [showHoja, setShowHoja] = useState(false);
+  const [showCertificado, setShowCertificado] = useState(false);
 
   const handleAnterior = () => {
     setStep(() => step - 1);
@@ -71,7 +74,7 @@ export const Formulario = () => {
             resetForm();
           }}
         >
-          {({ handleSubmit }) => (
+          {({ handleSubmit, values }) => (
             <Form onSubmit={handleSubmit}>
               <DivForm>
                 {step === 1 && (
@@ -228,6 +231,11 @@ export const Formulario = () => {
                         id="certificadoBancario"
                         name="certificadoBancario"
                         placeholder="Certificado Bancario"
+                        onMouseLeave={() => {
+                          values.certificadoBancario &&
+                            setShowCertificado(true)
+                        }}
+                        className={`${showCertificado && 'show'}`}
                       />
                     </DivInputFile>
                     <DivInputFile>
@@ -237,6 +245,11 @@ export const Formulario = () => {
                         id="hojaDeVida"
                         name="hojaDeVida"
                         placeholder="Hoja De Vida"
+                        onMouseLeave={() => {
+                          values.hojaDeVida &&
+                            setShowHoja(true)
+                        }}
+                        className={`${showHoja && 'show'}`}
                       />
                     </DivInputFile>
                     <Field
@@ -250,7 +263,14 @@ export const Formulario = () => {
                       id="tipoContratacion"
                       name="tipoContratacion"
                       placeholder="Tipo de Contratación"
-                    />
+                      component="select"
+                    >
+                      <option value="">Tipo de Contratación</option>
+                      <option value="indefinido">Indefinido</option>
+                      <option value="servicios">Servicios</option>
+                      <option value="freelance">Freelance</option>
+                      <option value="definido">Definido</option>
+                    </Field>
                     <DivInputFile>
                       <p>Vinculado</p>
                       <Field
@@ -258,6 +278,11 @@ export const Formulario = () => {
                         id="vinculado"
                         name="vinculado"
                         placeholder="Vinculado"
+                        // onMouseLeave={() => {
+                        //   values.vinculado &&
+                        //     setShowVinculado(true)
+                        // }}
+                        className={'show'}
                       />
                     </DivInputFile>
                   </>

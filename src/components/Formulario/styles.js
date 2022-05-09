@@ -14,7 +14,7 @@ export const Container = styled.div`
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  height: 830px;
+  // height: 830px;
   margin-left: 15%;
   margin-right: 15%;
   width: 70%;
@@ -36,6 +36,24 @@ export const DivForm = styled.div`
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
     font-size: 16px;
     height: 35px;
+    padding-left: 20px;
+
+    &:hover,
+    &:focus,
+    &:active {
+      outline: none;
+      border-width: 1px;
+      border-color: rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  select{
+    border-color: transparent;
+    border-radius: 5px;
+    border-width: 1px;
+    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    height: 39px;
     padding-left: 20px;
 
     &:hover,
@@ -105,6 +123,7 @@ export const StyledTitle = styled.div`
 export const ButtonsSection = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 10px;
 `;
 
 export const Button = styled.button`
