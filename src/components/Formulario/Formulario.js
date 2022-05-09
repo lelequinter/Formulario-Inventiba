@@ -9,6 +9,7 @@ import {
   ButtonsSection,
   Button,
   VoidDiv,
+  DivInputFile,
 } from "./styles";
 
 export const Formulario = () => {
@@ -58,6 +59,8 @@ export const Formulario = () => {
           numeroCuenta: "",
           tipoCuenta: "",
           certificadoBancario: "",
+          hojaDeVida: "",
+          portafolio: "",
           tipoContratacion: "",
           vinculado: "",
         }}
@@ -125,6 +128,7 @@ export const Formulario = () => {
                     name="telefono"
                     placeholder="Telefono"
                   />
+                  <VoidDiv />
                 </>
               )}
               {step === 2 && (
@@ -180,6 +184,7 @@ export const Formulario = () => {
                     name="pension"
                     placeholder="Pension"
                   />
+                  <VoidDiv />
                 </>
               )}
               {step === 3 && (
@@ -214,13 +219,29 @@ export const Formulario = () => {
                     name="tipoCuenta"
                     placeholder="Tipo de Cuenta"
                   />
+                  <DivInputFile>
+                    <p>Certificado Bancario</p>
+                    <Field
+                      type="file"
+                      id="certificadoBancario"
+                      name="certificadoBancario"
+                      placeholder="Certificado Bancario"
+                    />
+                  </DivInputFile>
+                  <DivInputFile>
+                    <p>Hoja de Vida</p>
+                    <Field
+                      type="file"
+                      id="hojaDeVida"
+                      name="hojaDeVida"
+                      placeholder="Hoja De Vida"
+                    />
+                  </DivInputFile>
                   <Field
-                    type="file"
-                    id="certificadoBancario"
-                    name="certificadoBancario"
-                    placeholder="Certificado Bancario"
-                    // onFocus={(e) => (e.target.type = "file")}
-                    // onBlur={(e) => (e.target.type = "text")}
+                    type="text"
+                    id="portafolio"
+                    name="portafolio"
+                    placeholder="Portafolio"
                   />
                   <Field
                     type="text"
@@ -234,7 +255,6 @@ export const Formulario = () => {
                     name="vinculado"
                     placeholder="Vinculado"
                   />
-                  <VoidDiv />
                 </>
               )}
 

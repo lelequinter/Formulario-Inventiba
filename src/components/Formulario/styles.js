@@ -6,7 +6,7 @@ export const Container = styled.div`
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  height: 782px;
+  height: 830px;
   margin-left: 15%;
   margin-right: 15%;
   margin-top: 30px;
@@ -38,6 +38,27 @@ export const DivForm = styled.div`
       border-width: 1px;
       border-color: rgba(0, 0, 0, 0.4);
     }
+  }
+`;
+
+export const DivInputFile = styled.div`
+  display: flex;
+  align-items: center;
+  border-color: transparent;
+  border-radius: 5px;
+  border-width: 1px;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
+  color: #757575;
+  font-size: 16px;
+  height: 39px;
+  justify-content: space-between;
+  padding-left: 20px;
+
+  input {
+    box-shadow: none;
+    height: auto;
+    padding: 0;
+    max-width: 322px;
   }
 `;
 
