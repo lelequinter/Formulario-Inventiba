@@ -30,7 +30,6 @@ export const DivForm = styled.div`
     font-size: 16px;
     height: 35px;
     padding-left: 20px;
-    width: 95%;
 
     &:hover,
     &:focus,
