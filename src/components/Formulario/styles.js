@@ -1,4 +1,12 @@
 import styled from "styled-components";
+import BgBody from "../../imgs/background-body.jpg";
+
+export const Wrapper = styled.div`
+  background: url(${BgBody});
+  background-repeat: no-repeat;
+  background-size: 100% 55%;
+  padding-top: 80px;
+`;
 
 export const Container = styled.div`
   background: #fff;
@@ -9,7 +17,6 @@ export const Container = styled.div`
   height: 830px;
   margin-left: 15%;
   margin-right: 15%;
-  margin-top: 30px;
   width: 70%;
 `;
 
@@ -18,8 +25,8 @@ export const DivForm = styled.div`
   background-color: transparent;
   flex-direction: column;
   justify-content: center;
-  margin: 30px 15% 30px 15%;
-  width: 70%;
+  margin: 30px 25% 30px 25%;
+  width: 50%;
   gap: 15px;
 
   input {
@@ -54,8 +61,8 @@ export const DivInputFile = styled.div`
   justify-content: start;
   padding-left: 20px;
 
-  &:hover{
-    input{
+  &:hover {
+    input {
       opacity: 1;
     }
   }
