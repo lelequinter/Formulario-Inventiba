@@ -62,7 +62,7 @@ export const Formulario = () => {
           hojaDeVida: "",
           portafolio: "",
           tipoContratacion: "",
-          vinculado: "",
+          vinculado: false,
         }}
         onSubmit={(valores, { resetForm }) => {
           console.log(valores);
@@ -249,12 +249,15 @@ export const Formulario = () => {
                     name="tipoContratacion"
                     placeholder="Tipo de Contratación"
                   />
+                  <DivInputFile>
+                  <p>Vinculado</p>
                   <Field
-                    type="text"
+                    type="checkbox"
                     id="vinculado"
                     name="vinculado"
                     placeholder="Vinculado"
                   />
+                  </DivInputFile>
                 </>
               )}
 

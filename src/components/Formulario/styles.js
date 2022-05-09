@@ -51,14 +51,22 @@ export const DivInputFile = styled.div`
   color: #757575;
   font-size: 16px;
   height: 39px;
-  justify-content: space-between;
+  justify-content: start;
   padding-left: 20px;
+
+  &:hover{
+    input{
+      opacity: 1;
+    }
+  }
 
   input {
     box-shadow: none;
     height: auto;
     padding: 0;
+    margin-left: 10px;
     max-width: 322px;
+    opacity: 0;
   }
 `;
 
