@@ -93,10 +93,12 @@ export const StyledTitle = styled.div`
     justify-content: center;
     color: #085981;
     font-size: 20px;
+    font-style: italic;
     font-weight: 400;
     margin-left: 18%;
     margin-right: 18%;
     margin-top: 0;
+    text-align: center;
   }
 `;
 
