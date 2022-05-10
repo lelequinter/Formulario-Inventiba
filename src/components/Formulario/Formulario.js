@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { Steps } from "../Steps/Steps";
-import './styles.css'
+import "./styles.css";
 import {
   Wrapper,
   Container,
@@ -12,6 +12,7 @@ import {
   Button,
   VoidDiv,
   DivInputFile,
+  StyledError,
 } from "./styles";
 
 export const Formulario = () => {
@@ -69,12 +70,150 @@ export const Formulario = () => {
             tipoContratacion: "",
             vinculado: false,
           }}
+          validate={(valores) => {
+            let errores = {};
+
+            // Validacion correo
+            if (!valores.correo) {
+              errores.correo = "Ingrese su correo";
+            } else if (
+              !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+                valores.correo
+              )
+            ) {
+              errores.correo =
+                "El correo solo puede contener letras, números, puntos y guiones";
+            }
+
+            // Validacion Documento de identidad
+            if (!valores.cedula) {
+              errores.cedula = "Ingrese su documento de identidad";
+            } else if (!/^([0-9])*$/.test(valores.cedula)) {
+              errores.cedula =
+                "El documento de identidad solo puede contener números";
+            }
+
+            // Validacion Nombres
+            if (!valores.nombres) {
+              errores.nombres = "Ingrese sus nombres";
+            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.nombres)) {
+              errores.nombres =
+                "Los nombres solo pueden contener letras y espacios";
+            }
+
+            // Validacion Apellidos
+            if (!valores.apellidos) {
+              errores.apellidos = "Ingrese sus Apellidos";
+            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.apellidos)) {
+              errores.apellidos =
+                "Los apellidos solo pueden contener letras y espacios";
+            }
+
+            // Validacion Email Corporativo
+            if (!valores.emailcorp) {
+              errores.emailcorp = "Ingrese su correo corporativo";
+            } else if (
+              !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+                valores.emailcorp
+              )
+            ) {
+              errores.emailcorp =
+                "El correo solo puede contener letras, números, puntos y guiones";
+            }
+
+            // Validacion Email Alternativo
+            if (!valores.emailalt) {
+              errores.emailalt = "Ingrese su correo alternativo";
+            } else if (
+              !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+                valores.emailalt
+              )
+            ) {
+              errores.emailalt =
+                "El correo solo puede contener letras, números, puntos y guiones";
+            }
+
+            // Validacion Skype
+            if (!valores.skype) {
+              errores.skype = "Ingrese su usuario de skype";
+            }
+
+            // Validacion Direccion
+            if (!valores.direccion) {
+              errores.direccion = "Ingrese su dirreción";
+            }
+
+            // Validacion Telefono
+            if (!valores.telefono) {
+              errores.telefono = "Ingrese su teléfono";
+            } else if (!/^([0-9+\s])*$/.test(valores.telefono)) {
+              errores.telefono = "El teléfono solo puede contener números";
+            }
+
+            // Validacion Celular
+            if (!valores.celular) {
+              errores.celular = "Ingrese su número celular";
+            } else if (!/^([0-9/+\s])*$/.test(valores.celular)) {
+              errores.celular = "El número celular solo puede contener números";
+            }
+
+            // Validacion Fecha de Ingreso
+            if (!valores.fechaIngreso) {
+              errores.fechaIngreso = "Ingrese una fecha";
+            }
+
+            // Validacion Ciudad de Nacimiento
+            if (!valores.ciudadNacimiento) {
+              errores.ciudadNacimiento =
+                "Ingrese el nombre de su ciudad de nacimiento";
+            } else if (
+              !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.ciudadNacimiento)
+            ) {
+              errores.ciudadNacimiento =
+                "El nombre de la ciudad solo puede contener letras y espacios";
+            }
+
+            // Validacion Persona de Contacto
+            if (!valores.personaContacto) {
+              errores.personaContacto =
+                "Ingrese el nombre de su persona de contacto";
+            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.personaContacto)) {
+              errores.personaContacto =
+                "El nombre de la persona solo puede contener letras y espacios";
+            }
+
+            // Validacion Parentezco
+            if (!valores.parentezcoContacto) {
+              errores.parentezcoContacto =
+                "Ingrese su parentezco con la persona de contacto";
+            }
+
+            // Validacion Telefono Contacto
+            if (!valores.telefonoContacto) {
+              errores.telefonoContacto = "Ingrese el teléfono del contacto";
+            } else if (!/^([0-9/+\s])*$/.test(valores.telefonoContacto)) {
+              errores.telefonoContacto =
+                "El número teléfono solo puede contener números";
+            }
+
+            // Validacion Eps 
+            if (!valores.eps) {
+              errores.eps = "Ingrese el nombre de su EPS";
+            }
+
+            // Validacion Pension 
+            if (!valores.pension) {
+              errores.pension = "Ingrese el nombre de su fondo de pensiones";
+            }
+
+            return errores;
+          }}
           onSubmit={(valores, { resetForm }) => {
             console.log(valores);
             resetForm();
           }}
         >
-          {({ handleSubmit, values }) => (
+          {({ handleSubmit, values, handleBlur, touched, errors }) => (
             <Form onSubmit={handleSubmit}>
               <DivForm>
                 {step === 1 && (
@@ -84,55 +223,115 @@ export const Formulario = () => {
                       id="correo"
                       name="correo"
                       placeholder="Correo"
+                      className={`${
+                        touched.correo && errors.correo && "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.correo && errors.correo && errors.correo}
+                    </StyledError>
                     <Field
                       type="text"
                       id="cedula"
                       name="cedula"
                       placeholder="Documento de identidad"
+                      className={`${
+                        touched.cedula && errors.cedula && "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.cedula && errors.cedula && errors.cedula}
+                    </StyledError>
                     <Field
                       type="text"
                       id="nombres"
                       name="nombres"
                       placeholder="Nombres"
+                      className={`${
+                        touched.nombres && errors.nombres && "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.nombres && errors.nombres && errors.nombres}
+                    </StyledError>
                     <Field
                       type="text"
                       id="apellidos"
                       name="apellidos"
                       placeholder="Apellidos"
+                      className={`${
+                        touched.apellidos && errors.apellidos && "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.apellidos &&
+                        errors.apellidos &&
+                        errors.apellidos}
+                    </StyledError>
                     <Field
                       type="email"
                       id="emailcorp"
                       name="emailcorp"
                       placeholder="Email Corporativo"
+                      className={`${
+                        touched.emailcorp && errors.emailcorp && "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.emailcorp &&
+                        errors.emailcorp &&
+                        errors.emailcorp}
+                    </StyledError>
                     <Field
                       type="email"
                       id="emailalt"
                       name="emailalt"
                       placeholder="Email Alternativo"
+                      className={`${
+                        touched.emailalt && errors.emailalt && "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.emailalt && errors.emailalt && errors.emailalt}
+                    </StyledError>
                     <Field
                       type="text"
                       id="skype"
                       name="skype"
                       placeholder="Skype"
+                      className={`${
+                        touched.skype && errors.skype && "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.skype && errors.skype && errors.skype}
+                    </StyledError>
                     <Field
                       type="text"
                       id="direccion"
                       name="direccion"
                       placeholder="Dirección Física"
+                      className={`${
+                        touched.direccion && errors.direccion && "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.direccion &&
+                        errors.direccion &&
+                        errors.direccion}
+                    </StyledError>
                     <Field
                       type="text"
                       id="telefono"
                       name="telefono"
-                      placeholder="Telefono"
+                      placeholder="Teléfono"
+                      className={`${
+                        touched.telefono && errors.telefono && "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.telefono && errors.telefono && errors.telefono}
+                    </StyledError>
                     <VoidDiv />
                   </>
                 )}
@@ -143,52 +342,134 @@ export const Formulario = () => {
                       id="celular"
                       name="celular"
                       placeholder="Celular"
+                      className={`${
+                        touched.celular && errors.celular && "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.celular && errors.celular && errors.celular}
+                    </StyledError>
                     <Field
                       id="fechaIngreso"
                       name="fechaIngreso"
                       placeholder="Fecha de Ingreso"
-                      onFocus={(e) => (e.target.type = "date")}
-                      onBlur={(e) => (e.target.type = "text")}
+                      onMouseEnter={(e) => (e.target.type = "date")}
+                      onMouseLeave={(e) => (e.target.type = "text")}
+                      className={`${
+                        touched.fechaIngreso &&
+                        errors.fechaIngreso &&
+                        "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.fechaIngreso &&
+                        errors.fechaIngreso &&
+                        errors.fechaIngreso}
+                    </StyledError>
                     <Field
                       id="fechaRetiro"
                       name="fechaRetiro"
                       placeholder="Fecha de Retiro"
-                      onFocus={(e) => (e.target.type = "date")}
-                      onBlur={(e) => (e.target.type = "text")}
+                      onMouseEnter={(e) => (e.target.type = "date")}
+                      onMouseLeave={(e) => (e.target.type = "text")}
                     />
+                    <StyledError />
                     <Field
                       type="text"
                       id="ciudadNacimiento"
                       name="ciudadNacimiento"
                       placeholder="Ciudad de Nacimiento"
+                      className={`${
+                        touched.ciudadNacimiento &&
+                        errors.ciudadNacimiento &&
+                        "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.ciudadNacimiento &&
+                        errors.ciudadNacimiento &&
+                        errors.ciudadNacimiento}
+                    </StyledError>
                     <Field
                       type="text"
                       id="personaContacto"
                       name="personaContacto"
                       placeholder="Persona de Contacto"
+                      className={`${
+                        touched.personaContacto &&
+                        errors.personaContacto &&
+                        "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.personaContacto &&
+                        errors.personaContacto &&
+                        errors.personaContacto}
+                    </StyledError>
                     <Field
                       type="text"
                       id="parentezcoContacto"
                       name="parentezcoContacto"
                       placeholder="Parentezco con el Contacto"
+                      className={`${
+                        touched.parentezcoContacto &&
+                        errors.parentezcoContacto &&
+                        "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.parentezcoContacto &&
+                        errors.parentezcoContacto &&
+                        errors.parentezcoContacto}
+                    </StyledError>
                     <Field
                       type="text"
                       id="telefonoContacto"
                       name="telefonoContacto"
                       placeholder="Telefono del Contacto"
+                      className={`${
+                        touched.telefonoContacto &&
+                        errors.telefonoContacto &&
+                        "InputError"
+                      }`}
                     />
-                    <Field type="text" id="eps" name="eps" placeholder="EPS" />
+                    <StyledError>
+                      {touched.telefonoContacto &&
+                        errors.telefonoContacto &&
+                        errors.telefonoContacto}
+                    </StyledError>
+                    <Field
+                      type="text"
+                      id="eps"
+                      name="eps"
+                      placeholder="EPS"
+                      className={`${
+                        touched.eps &&
+                        errors.eps &&
+                        "InputError"
+                      }`}
+                    />
+                    <StyledError>
+                      {touched.eps &&
+                        errors.eps &&
+                        errors.eps}
+                    </StyledError>
                     <Field
                       type="text"
                       id="pension"
                       name="pension"
                       placeholder="Pension"
+                      className={`${
+                        touched.pension &&
+                        errors.pension &&
+                        "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.pension &&
+                        errors.pension &&
+                        errors.pension}
+                    </StyledError>
                     <VoidDiv />
                   </>
                 )}
@@ -233,9 +514,9 @@ export const Formulario = () => {
                         placeholder="Certificado Bancario"
                         onMouseLeave={() => {
                           values.certificadoBancario &&
-                            setShowCertificado(true)
+                            setShowCertificado(true);
                         }}
-                        className={`${showCertificado && 'show'}`}
+                        className={`${showCertificado && "show"}`}
                       />
                     </DivInputFile>
                     <DivInputFile>
@@ -246,17 +527,16 @@ export const Formulario = () => {
                         name="hojaDeVida"
                         placeholder="Hoja De Vida"
                         onMouseLeave={() => {
-                          values.hojaDeVida &&
-                            setShowHoja(true)
+                          values.hojaDeVida && setShowHoja(true);
                         }}
-                        className={`${showHoja && 'show'}`}
+                        className={`${showHoja && "show"}`}
                       />
                     </DivInputFile>
                     <Field
                       type="text"
                       id="portafolio"
                       name="portafolio"
-                      placeholder="Portafolio"
+                      placeholder="Link a Portafolio"
                     />
                     <Field
                       type="text"
@@ -282,7 +562,7 @@ export const Formulario = () => {
                         //   values.vinculado &&
                         //     setShowVinculado(true)
                         // }}
-                        className={'show'}
+                        className={"show"}
                       />
                     </DivInputFile>
                   </>

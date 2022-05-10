@@ -27,7 +27,7 @@ export const DivForm = styled.div`
   justify-content: center;
   margin: 30px 25% 30px 25%;
   width: 50%;
-  gap: 15px;
+  // gap: 15px;
 
   input {
     border-color: transparent;
@@ -37,6 +37,7 @@ export const DivForm = styled.div`
     font-size: 16px;
     height: 35px;
     padding-left: 20px;
+    auto-complete: none;
 
     &:hover,
     &:focus,
@@ -64,6 +65,14 @@ export const DivForm = styled.div`
       border-color: rgba(0, 0, 0, 0.4);
     }
   }
+`;
+
+export const StyledError = styled.label`
+  height: 15px;
+  font-size: 14px;
+  margin: 5px 0 9px 0;
+  color: red;
+  font-weight: bold;
 `;
 
 export const DivInputFile = styled.div`
