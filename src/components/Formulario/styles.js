@@ -73,6 +73,7 @@ export const StyledError = styled.label`
   margin: 5px 0 9px 0;
   color: red;
   font-weight: bold;
+  font-style: italic;
 `;
 
 export const DivInputFile = styled.div`
