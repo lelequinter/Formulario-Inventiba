@@ -133,6 +133,8 @@ export const ButtonsSection = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  margin-top: 15px;
+  height: 35px;
 `;
 
 export const Button = styled.button`

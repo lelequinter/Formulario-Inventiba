@@ -196,14 +196,54 @@ export const Formulario = () => {
                 "El número teléfono solo puede contener números";
             }
 
-            // Validacion Eps 
+            // Validacion Eps
             if (!valores.eps) {
               errores.eps = "Ingrese el nombre de su EPS";
             }
 
-            // Validacion Pension 
+            // Validacion Pension
             if (!valores.pension) {
               errores.pension = "Ingrese el nombre de su fondo de pensiones";
+            }
+
+            // Validacion Caja de Compensacion
+            if (!valores.cajaCompensacion) {
+              errores.cajaCompensacion =
+                "Ingrese el nombre de su caja de compensación";
+            }
+
+            // Validacion Salario Real
+            if (!valores.salarioReal) {
+              errores.salarioReal = "Ingrese su salario real";
+            } else if (!/^([0-9.,'"])*$/.test(valores.salarioReal)) {
+              errores.salarioReal =
+                "El salario solo puede contener números o simbolos de separacion ";
+            }
+
+            // Validacion Numero Cuenta Bancaria
+            if (!valores.numeroCuenta) {
+              errores.numeroCuenta = "Ingrese su número de cuenta bancaria";
+            } else if (!/^([0-9.,-])*$/.test(valores.numeroCuenta)) {
+              errores.numeroCuenta =
+                "El número de cuenta solo puede contener números y guiones";
+            }
+
+            // Validacion Numero Cuenta Bancaria
+            if (!valores.tipoCuenta) {
+              errores.tipoCuenta = "Ingrese su tipo de cuenta bancaria";
+            }
+
+            // Validacion de Certificado bancario
+            // Validacion de Certificado bancario
+            // Validacion de Certificado bancario
+
+            // Validacion de Hoja de Vida
+            // Validacion de Hoja de Vida
+            // Validacion de Hoja de Vida
+
+            // Validacion Tipo de Contratacion
+            if (!valores.tipoContratacion) {
+              errores.tipoContratacion = "Seleccione el tipo de contratación";
             }
 
             return errores;
@@ -213,7 +253,7 @@ export const Formulario = () => {
             resetForm();
           }}
         >
-          {({ handleSubmit, values, handleBlur, touched, errors }) => (
+          {({ handleSubmit, values, touched, errors }) => (
             <Form onSubmit={handleSubmit}>
               <DivForm>
                 {step === 1 && (
@@ -443,16 +483,10 @@ export const Formulario = () => {
                       id="eps"
                       name="eps"
                       placeholder="EPS"
-                      className={`${
-                        touched.eps &&
-                        errors.eps &&
-                        "InputError"
-                      }`}
+                      className={`${touched.eps && errors.eps && "InputError"}`}
                     />
                     <StyledError>
-                      {touched.eps &&
-                        errors.eps &&
-                        errors.eps}
+                      {touched.eps && errors.eps && errors.eps}
                     </StyledError>
                     <Field
                       type="text"
@@ -460,15 +494,11 @@ export const Formulario = () => {
                       name="pension"
                       placeholder="Pension"
                       className={`${
-                        touched.pension &&
-                        errors.pension &&
-                        "InputError"
+                        touched.pension && errors.pension && "InputError"
                       }`}
                     />
                     <StyledError>
-                      {touched.pension &&
-                        errors.pension &&
-                        errors.pension}
+                      {touched.pension && errors.pension && errors.pension}
                     </StyledError>
                     <VoidDiv />
                   </>
@@ -480,31 +510,70 @@ export const Formulario = () => {
                       id="cajaCompensacion"
                       name="cajaCompensacion"
                       placeholder="Caja de Compensacion"
+                      className={`${
+                        touched.cajaCompensacion &&
+                        errors.cajaCompensacion &&
+                        "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.cajaCompensacion &&
+                        errors.cajaCompensacion &&
+                        errors.cajaCompensacion}
+                    </StyledError>
                     <Field
                       type="text"
                       id="salarioReal"
                       name="salarioReal"
                       placeholder="Salario Real"
+                      className={`${
+                        touched.salarioReal &&
+                        errors.salarioReal &&
+                        "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.salarioReal &&
+                        errors.salarioReal &&
+                        errors.salarioReal}
+                    </StyledError>
                     <Field
                       type="text"
                       id="salarioCotizado"
                       name="salarioCotizado"
                       placeholder="Salario Cotizado"
                     />
+                    <StyledError />
                     <Field
                       type="text"
                       id="numeroCuenta"
                       name="numeroCuenta"
                       placeholder="Número de Cuenta Bancaria"
+                      className={`${
+                        touched.numeroCuenta &&
+                        errors.numeroCuenta &&
+                        "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.numeroCuenta &&
+                        errors.numeroCuenta &&
+                        errors.numeroCuenta}
+                    </StyledError>
                     <Field
                       type="text"
                       id="tipoCuenta"
                       name="tipoCuenta"
                       placeholder="Tipo de Cuenta"
+                      className={`${
+                        touched.tipoCuenta && errors.tipoCuenta && "InputError"
+                      }`}
                     />
+                    <StyledError>
+                      {touched.tipoCuenta &&
+                        errors.tipoCuenta &&
+                        errors.tipoCuenta}
+                    </StyledError>
                     <DivInputFile>
                       <p>Certificado Bancario</p>
                       <Field
@@ -519,6 +588,7 @@ export const Formulario = () => {
                         className={`${showCertificado && "show"}`}
                       />
                     </DivInputFile>
+                    <StyledError />
                     <DivInputFile>
                       <p>Hoja de Vida</p>
                       <Field
@@ -532,18 +602,23 @@ export const Formulario = () => {
                         className={`${showHoja && "show"}`}
                       />
                     </DivInputFile>
+                    <StyledError />
                     <Field
                       type="text"
                       id="portafolio"
                       name="portafolio"
                       placeholder="Link a Portafolio"
                     />
+                    <StyledError />
                     <Field
                       type="text"
                       id="tipoContratacion"
                       name="tipoContratacion"
                       placeholder="Tipo de Contratación"
                       component="select"
+                      className={`${
+                        touched.tipoContratacion && errors.tipoContratacion && "InputError"
+                      }`}
                     >
                       <option value="">Tipo de Contratación</option>
                       <option value="indefinido">Indefinido</option>
@@ -551,6 +626,11 @@ export const Formulario = () => {
                       <option value="freelance">Freelance</option>
                       <option value="definido">Definido</option>
                     </Field>
+                    <StyledError>
+                      {touched.tipoContratacion &&
+                        errors.tipoContratacion &&
+                        errors.tipoContratacion}
+                    </StyledError>
                     <DivInputFile>
                       <p>Vinculado</p>
                       <Field
@@ -558,10 +638,6 @@ export const Formulario = () => {
                         id="vinculado"
                         name="vinculado"
                         placeholder="Vinculado"
-                        // onMouseLeave={() => {
-                        //   values.vinculado &&
-                        //     setShowVinculado(true)
-                        // }}
                         className={"show"}
                       />
                     </DivInputFile>
