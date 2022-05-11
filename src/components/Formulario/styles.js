@@ -48,7 +48,7 @@ export const DivForm = styled.div`
     }
   }
 
-  select{
+  select {
     border-color: transparent;
     border-radius: 5px;
     border-width: 1px;
@@ -121,9 +121,14 @@ export const DivInputDate = styled.div`
   justify-content: start;
   padding-left: 20px;
 
-  &:hover {
+  &:hover,
+  &:focus,
+  &:active {
     input {
       opacity: 1;
+      outline: none;
+      border-color: transparent;
+      border-width: 0;
     }
   }
 
@@ -134,6 +139,8 @@ export const DivInputDate = styled.div`
     margin-left: 10px;
     max-width: 322px;
     opacity: 0;
+    border-width: 0;
+    outline: none;
     border-color: transparent;
   }
 `;
@@ -167,7 +174,7 @@ export const ButtonsSection = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  margin-top: 15px;
+  margin-top: 20px;
   height: 35px;
 `;
 
