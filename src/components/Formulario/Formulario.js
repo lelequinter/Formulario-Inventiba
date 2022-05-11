@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import { Formik, Form, Field } from "formik";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { Steps } from "../Steps/Steps";
@@ -22,6 +23,8 @@ export const Formulario = () => {
   const [showCertificado, setShowCertificado] = useState(false);
   const [showFechaRetiro, setShowFechaRetiro] = useState(false);
   const [showFechaIngreso, setShowFechaIngreso] = useState(false);
+
+  const formRef = useRef(null);
 
   const handleAnterior = () => {
     setStep(() => step - 1);
@@ -254,8 +257,21 @@ export const Formulario = () => {
 
             return errores;
           }}
-          onSubmit={(valores, { resetForm }) => {
-            console.log(valores);
+          onSubmit={(values, { resetForm }) => {
+            // event.preventDefault();
+            //Envio del formulario
+            console.log(values);
+            emailjs
+              .sendForm(
+                "service_hsmh3dj",
+                "template_i6a61qv",
+                formRef.current,
+                "_pmKLtKc8gu3H24R6"
+              )
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => console.log(err));
             resetForm();
           }}
         >
@@ -267,7 +283,7 @@ export const Formulario = () => {
             errors,
             setFieldValue,
           }) => (
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} ref={formRef}>
               <DivForm>
                 {step === 1 && (
                   <>
