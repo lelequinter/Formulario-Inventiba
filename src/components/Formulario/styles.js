@@ -82,10 +82,11 @@ export const DivInputFile = styled.div`
   border-color: transparent;
   border-radius: 5px;
   border-width: 1px;
+  border-style: solid;
   box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
   color: #757575;
   font-size: 16px;
-  height: 39px;
+  height: 37px;
   justify-content: start;
   padding-left: 20px;
 
@@ -102,6 +103,38 @@ export const DivInputFile = styled.div`
     margin-left: 10px;
     max-width: 322px;
     opacity: 0;
+  }
+`;
+
+export const DivInputDate = styled.div`
+  display: flex;
+  align-items: center;
+  border-color: transparent;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  border-style: solid;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
+  color: #757575;
+  font-size: 16px;
+  height: 37px;
+  justify-content: start;
+  padding-left: 20px;
+
+  &:hover {
+    input {
+      opacity: 1;
+    }
+  }
+
+  input {
+    box-shadow: none;
+    height: auto;
+    padding: 0;
+    margin-left: 10px;
+    max-width: 322px;
+    opacity: 0;
+    border-color: transparent;
   }
 `;
 

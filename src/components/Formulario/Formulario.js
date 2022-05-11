@@ -12,6 +12,7 @@ import {
   Button,
   VoidDiv,
   DivInputFile,
+  DivInputDate,
   StyledError,
 } from "./styles";
 
@@ -19,6 +20,8 @@ export const Formulario = () => {
   const [step, setStep] = useState(1);
   const [showHoja, setShowHoja] = useState(false);
   const [showCertificado, setShowCertificado] = useState(false);
+  const [showFechaRetiro, setShowFechaRetiro] = useState(false);
+  const [showFechaIngreso, setShowFechaIngreso] = useState(false);
 
   const handleAnterior = () => {
     setStep(() => step - 1);
@@ -234,12 +237,15 @@ export const Formulario = () => {
             }
 
             // Validacion de Certificado bancario
-            // Validacion de Certificado bancario
-            // Validacion de Certificado bancario
+            if (!valores.certificadoBancario) {
+              errores.certificadoBancario =
+                "Adjunte su certificado de cuenta bancaria";
+            }
 
             // Validacion de Hoja de Vida
-            // Validacion de Hoja de Vida
-            // Validacion de Hoja de Vida
+            if (!valores.hojaDeVida) {
+              errores.hojaDeVida = "Adjunte su hoja de vida";
+            }
 
             // Validacion Tipo de Contratacion
             if (!valores.tipoContratacion) {
@@ -253,7 +259,14 @@ export const Formulario = () => {
             resetForm();
           }}
         >
-          {({ handleSubmit, values, touched, errors }) => (
+          {({
+            handleSubmit,
+            handleBlur,
+            values,
+            touched,
+            errors,
+            setFieldValue,
+          }) => (
             <Form onSubmit={handleSubmit}>
               <DivForm>
                 {step === 1 && (
@@ -389,30 +402,43 @@ export const Formulario = () => {
                     <StyledError>
                       {touched.celular && errors.celular && errors.celular}
                     </StyledError>
-                    <Field
-                      id="fechaIngreso"
-                      name="fechaIngreso"
-                      placeholder="Fecha de Ingreso"
-                      onMouseEnter={(e) => (e.target.type = "date")}
-                      onMouseLeave={(e) => (e.target.type = "text")}
+                    <DivInputDate
                       className={`${
                         touched.fechaIngreso &&
                         errors.fechaIngreso &&
                         "InputError"
                       }`}
-                    />
+                    >
+                      <p>Fecha de Ingreso</p>
+                      <Field
+                        type="date"
+                        id="fechaIngreso"
+                        name="fechaIngreso"
+                        placeholder="Fecha de Ingreso"
+                        onMouseLeave={() => {
+                          values.fechaIngreso && setShowFechaIngreso(true);
+                        }}
+                        className={`${showFechaIngreso && "show"}`}
+                      />
+                    </DivInputDate>
                     <StyledError>
                       {touched.fechaIngreso &&
                         errors.fechaIngreso &&
                         errors.fechaIngreso}
                     </StyledError>
-                    <Field
-                      id="fechaRetiro"
-                      name="fechaRetiro"
-                      placeholder="Fecha de Retiro"
-                      onMouseEnter={(e) => (e.target.type = "date")}
-                      onMouseLeave={(e) => (e.target.type = "text")}
-                    />
+                    <DivInputDate>
+                      <p>Fecha de Retiro</p>
+                      <Field
+                        type="date"
+                        id="fechaRetiro"
+                        name="fechaRetiro"
+                        placeholder="Fecha de Retiro"
+                        onMouseLeave={() => {
+                          values.fechaRetiro && setShowFechaRetiro(true);
+                        }}
+                        className={`${showFechaRetiro && "show"}`}
+                      />
+                    </DivInputDate>
                     <StyledError />
                     <Field
                       type="text"
@@ -574,35 +600,64 @@ export const Formulario = () => {
                         errors.tipoCuenta &&
                         errors.tipoCuenta}
                     </StyledError>
-                    <DivInputFile>
+                    <DivInputFile
+                      className={`${
+                        touched.certificadoBancario &&
+                        errors.certificadoBancario &&
+                        "InputError"
+                      }`}
+                    >
                       <p>Certificado Bancario</p>
-                      <Field
+                      <input
                         type="file"
                         id="certificadoBancario"
                         name="certificadoBancario"
                         placeholder="Certificado Bancario"
+                        onBlur={handleBlur}
                         onMouseLeave={() => {
                           values.certificadoBancario &&
                             setShowCertificado(true);
                         }}
                         className={`${showCertificado && "show"}`}
+                        onChange={(e) =>
+                          setFieldValue(
+                            "certificadoBancario",
+                            e.target.files[0]
+                          )
+                        }
                       />
                     </DivInputFile>
-                    <StyledError />
-                    <DivInputFile>
+                    <StyledError>
+                      {touched.certificadoBancario &&
+                        errors.certificadoBancario &&
+                        errors.certificadoBancario}
+                    </StyledError>
+                    <DivInputFile
+                      className={`${
+                        touched.hojaDeVida && errors.hojaDeVida && "InputError"
+                      }`}
+                    >
                       <p>Hoja de Vida</p>
-                      <Field
+                      <input
                         type="file"
                         id="hojaDeVida"
                         name="hojaDeVida"
                         placeholder="Hoja De Vida"
+                        onBlur={handleBlur}
                         onMouseLeave={() => {
                           values.hojaDeVida && setShowHoja(true);
                         }}
                         className={`${showHoja && "show"}`}
+                        onChange={(e) =>
+                          setFieldValue("hojaDeVida", e.target.files[0])
+                        }
                       />
                     </DivInputFile>
-                    <StyledError />
+                    <StyledError>
+                      {touched.hojaDeVida &&
+                        errors.hojaDeVida &&
+                        errors.hojaDeVida}
+                    </StyledError>
                     <Field
                       type="text"
                       id="portafolio"
@@ -617,7 +672,9 @@ export const Formulario = () => {
                       placeholder="Tipo de Contratación"
                       component="select"
                       className={`${
-                        touched.tipoContratacion && errors.tipoContratacion && "InputError"
+                        touched.tipoContratacion &&
+                        errors.tipoContratacion &&
+                        "InputError"
                       }`}
                     >
                       <option value="">Tipo de Contratación</option>
@@ -643,7 +700,6 @@ export const Formulario = () => {
                     </DivInputFile>
                   </>
                 )}
-
                 <ButtonsSection>
                   {step === 1 ? (
                     <VoidDiv />
