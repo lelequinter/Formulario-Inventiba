@@ -25,6 +25,10 @@ export const FooterRing = styled.div`
   justify-content: center;
   height: 60px;
   padding-top: 20px;
+
+  @media (max-width: 400px) {
+    padding-top: 0;
+  }
 `;
 
 export const StyledRing = styled.a`
