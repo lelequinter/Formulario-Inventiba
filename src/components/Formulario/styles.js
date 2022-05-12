@@ -6,6 +6,10 @@ export const Wrapper = styled.div`
   background-repeat: no-repeat;
   background-size: 100% 55%;
   padding-top: 80px;
+
+  @media (max-width: 400px) {
+    padding-top: 30px;
+  }
 `;
 
 export const Container = styled.div`
@@ -18,6 +22,12 @@ export const Container = styled.div`
   margin-left: 15%;
   margin-right: 15%;
   width: 70%;
+
+  @media (max-width: 400px) {
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+  }
 `;
 
 export const DivForm = styled.div`
@@ -155,6 +165,10 @@ export const StyledTitle = styled.div`
     color: #085981;
     font-size: 35px;
     font-weight: 400;
+
+    @media (max-width: 400px) {
+      font-size: 30px;
+    }
   }
   h2 {
     display: flex;
@@ -167,6 +181,10 @@ export const StyledTitle = styled.div`
     margin-right: 18%;
     margin-top: 0;
     text-align: center;
+
+    @media (max-width: 400px) {
+      font-size: 16px;
+    }
   }
 `;
 
