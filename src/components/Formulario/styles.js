@@ -134,6 +134,14 @@ export const DivInputFile = styled.div`
     }
   }
 
+  span{
+    max-width: 200px;
+    
+    @media (max-width: 750px) {
+      max-width: 100px;
+    }
+  }
+
   input {
     box-shadow: none;
     height: auto;
@@ -142,6 +150,7 @@ export const DivInputFile = styled.div`
     max-width: 322px;
     opacity: 0;
   }
+
   @media (max-width: 420px) {
     height: 32px;
     font-size: 14px;

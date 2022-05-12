@@ -284,7 +284,7 @@ export const Formulario = () => {
             touched,
             errors,
             setFieldValue,
-            validateField
+            validateField,
           }) => (
             <Form onSubmit={handleSubmit} ref={formRef}>
               <DivForm>
@@ -621,12 +621,14 @@ export const Formulario = () => {
                     </StyledError>
                     <DivInputFile
                       className={`${
-                        showCertificado && errors.certificadoBancario && "InputError"
+                        showCertificado &&
+                        errors.certificadoBancario &&
+                        "InputError"
                       }`}
                       onClick={() => {
                         certificadoRef.current.click();
                         errors.certificadoBancario = "Adjunte su hoja de vida";
-                        !values.hojaDeVida && setShowCertificado(true)
+                        !values.hojaDeVida && setShowCertificado(true);
                       }}
                     >
                       <p>Certificado Bancario</p>
@@ -644,12 +646,15 @@ export const Formulario = () => {
                           )
                         }
                       />
-                      {values.certificadoBancario? <p>{values.certificadoBancario.name}</p> : <p>Cargar archivo</p> }
+                      {values.certificadoBancario ? (
+                        <span className="scroll">{values.certificadoBancario.name}</span>
+                      ) : (
+                        <span>Cargar archivo</span>
+                      )}
                       <FaUpload />
                     </DivInputFile>
                     <StyledError>
-                      { showCertificado &&
-                        errors.certificadoBancario}
+                      {showCertificado && errors.certificadoBancario}
                     </StyledError>
                     <DivInputFile
                       className={`${
@@ -658,7 +663,7 @@ export const Formulario = () => {
                       onClick={() => {
                         hojaRef.current.click();
                         errors.hojaDeVida = "Adjunte su hoja de vida";
-                        !values.hojaDeVida && setShowHoja(true)
+                        !values.hojaDeVida && setShowHoja(true);
                       }}
                     >
                       <p>Hoja de Vida</p>
@@ -673,13 +678,14 @@ export const Formulario = () => {
                           setFieldValue("hojaDeVida", e.target.files[0])
                         }
                       />
-                      {values.hojaDeVida? <p>{values.hojaDeVida.name}</p> : <p>Cargar archivo</p> }
-                      <FaUpload/>
+                      {values.hojaDeVida ? (
+                        <span className="scroll">{values.hojaDeVida.name}</span>
+                      ) : (
+                        <span>Cargar archivo</span>
+                      )}
+                      <FaUpload />
                     </DivInputFile>
-                    <StyledError>
-                      { showHoja &&
-                        errors.hojaDeVida}
-                    </StyledError>
+                    <StyledError>{showHoja && errors.hojaDeVida}</StyledError>
                     <Field
                       type="text"
                       id="portafolio"
