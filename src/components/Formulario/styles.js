@@ -37,7 +37,11 @@ export const DivForm = styled.div`
   justify-content: center;
   margin: 30px 25% 30px 25%;
   width: 50%;
-  // gap: 15px;
+
+  @media (max-width: 420px) {
+    margin: 30px 5% 30px 5%;
+    width: 90%;
+  }
 
   input {
     border-color: transparent;
@@ -55,6 +59,11 @@ export const DivForm = styled.div`
       outline: none;
       border-width: 1px;
       border-color: rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 420px) {
+      height: 30px;
+      font-size: 14px;
     }
   }
 
@@ -74,12 +83,17 @@ export const DivForm = styled.div`
       border-width: 1px;
       border-color: rgba(0, 0, 0, 0.4);
     }
+
+    @media (max-width: 420px) {
+      height: 34px;
+      font-size: 14px;
+    }
   }
 `;
 
 export const StyledError = styled.label`
   height: 15px;
-  font-size: 14px;
+  font-size: 13px;
   margin: 5px 0 9px 0;
   color: red;
   font-weight: bold;
@@ -113,6 +127,10 @@ export const DivInputFile = styled.div`
     margin-left: 10px;
     max-width: 322px;
     opacity: 0;
+  }
+  @media (max-width: 420px) {
+    height: 32px;
+    font-size: 14px;
   }
 `;
 
@@ -152,6 +170,11 @@ export const DivInputDate = styled.div`
     border-width: 0;
     outline: none;
     border-color: transparent;
+  }
+
+  @media (max-width: 420px) {
+    height: 32px;
+    font-size: 14px;
   }
 `;
 
@@ -217,9 +240,17 @@ export const Button = styled.button`
     border-width: 1px;
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.1);
   }
+
+  @media (max-width: 420px) {
+    width: 110px;
+  }
 `;
 
 export const VoidDiv = styled.div`
   width: 100px;
   height: 39px;
+  @media (max-width: 420px) {
+    height: 34px;
+    font-size: 14px;
+  }
 `;
