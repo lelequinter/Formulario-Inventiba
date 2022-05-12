@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   background-size: 100% 55%;
   padding-top: 80px;
 
-  @media (max-width: 400px) {
+  @media (max-width: 420px) {
     padding-top: 30px;
   }
 `;
@@ -23,7 +23,7 @@ export const Container = styled.div`
   margin-right: 15%;
   width: 70%;
 
-  @media (max-width: 400px) {
+  @media (max-width: 420px) {
     margin-left: 5%;
     margin-right: 5%;
     width: 90%;
@@ -189,7 +189,7 @@ export const StyledTitle = styled.div`
     font-size: 35px;
     font-weight: 400;
 
-    @media (max-width: 400px) {
+    @media (max-width: 420px) {
       font-size: 30px;
     }
   }
@@ -205,7 +205,7 @@ export const StyledTitle = styled.div`
     margin-top: 0;
     text-align: center;
 
-    @media (max-width: 400px) {
+    @media (max-width: 420px) {
       font-size: 16px;
     }
   }

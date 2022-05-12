@@ -15,7 +15,7 @@ export const Container = styled.div`
   border-top: 15px solid;
   border-color: #9cca1f;
 
-  @media (max-width: 400px) {
+  @media (max-width: 420px) {
     height: 120px;
   }
 `;
@@ -26,7 +26,7 @@ export const FooterRing = styled.div`
   height: 60px;
   padding-top: 20px;
 
-  @media (max-width: 400px) {
+  @media (max-width: 420px) {
     padding-top: 0;
   }
 `;

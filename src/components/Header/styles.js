@@ -9,7 +9,7 @@ export const Container = styled.div`
   height: 170px;
   justify-content: center;
 
-  @media (max-width: 400px) {
+  @media (max-width: 420px) {
     height: 130px;
   }
 `;
@@ -27,7 +27,7 @@ export const StyledLogo = styled.div`
     width: 370px;
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 420px) {
     height: 64px;
     transform: scale(1);
     width: 338px;
