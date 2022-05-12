@@ -122,10 +122,13 @@ export const DivInputFile = styled.div`
   color: #757575;
   font-size: 16px;
   height: 37px;
-  justify-content: start;
-  padding-left: 20px;
+  justify-content: space-between;
+  padding: 0 20px;
 
   &:hover {
+    outline: none;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.4);
     input {
       opacity: 1;
     }

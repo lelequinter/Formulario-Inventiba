@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { Formik, Form, Field } from "formik";
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight, FaChevronLeft, FaUpload } from "react-icons/fa";
 import { Steps } from "../Steps/Steps";
 import "./styles.css";
 import {
@@ -25,6 +25,8 @@ export const Formulario = () => {
   const [showFechaIngreso, setShowFechaIngreso] = useState(false);
 
   const formRef = useRef(null);
+  const certificadoRef = useRef(null);
+  const hojaRef = useRef(null);
 
   const handleAnterior = () => {
     setStep(() => step - 1);
@@ -282,6 +284,7 @@ export const Formulario = () => {
             touched,
             errors,
             setFieldValue,
+            validateField
           }) => (
             <Form onSubmit={handleSubmit} ref={formRef}>
               <DivForm>
@@ -618,23 +621,22 @@ export const Formulario = () => {
                     </StyledError>
                     <DivInputFile
                       className={`${
-                        touched.certificadoBancario &&
-                        errors.certificadoBancario &&
-                        "InputError"
+                        showCertificado && errors.certificadoBancario && "InputError"
                       }`}
+                      onClick={() => {
+                        certificadoRef.current.click();
+                        errors.certificadoBancario = "Adjunte su hoja de vida";
+                        !values.hojaDeVida && setShowCertificado(true)
+                      }}
                     >
                       <p>Certificado Bancario</p>
                       <input
+                        hidden
+                        ref={certificadoRef}
                         type="file"
                         id="certificadoBancario"
                         name="certificadoBancario"
                         placeholder="Certificado Bancario"
-                        onBlur={handleBlur}
-                        onMouseLeave={() => {
-                          values.certificadoBancario &&
-                            setShowCertificado(true);
-                        }}
-                        className={`${showCertificado && "show"}`}
                         onChange={(e) =>
                           setFieldValue(
                             "certificadoBancario",
@@ -642,36 +644,40 @@ export const Formulario = () => {
                           )
                         }
                       />
+                      {values.certificadoBancario? <p>{values.certificadoBancario.name}</p> : <p>Cargar archivo</p> }
+                      <FaUpload />
                     </DivInputFile>
                     <StyledError>
-                      {touched.certificadoBancario &&
-                        errors.certificadoBancario &&
+                      { showCertificado &&
                         errors.certificadoBancario}
                     </StyledError>
                     <DivInputFile
                       className={`${
-                        touched.hojaDeVida && errors.hojaDeVida && "InputError"
+                        showHoja && errors.hojaDeVida && "InputError"
                       }`}
+                      onClick={() => {
+                        hojaRef.current.click();
+                        errors.hojaDeVida = "Adjunte su hoja de vida";
+                        !values.hojaDeVida && setShowHoja(true)
+                      }}
                     >
                       <p>Hoja de Vida</p>
                       <input
+                        hidden
+                        ref={hojaRef}
                         type="file"
                         id="hojaDeVida"
                         name="hojaDeVida"
                         placeholder="Hoja De Vida"
-                        onBlur={handleBlur}
-                        onMouseLeave={() => {
-                          values.hojaDeVida && setShowHoja(true);
-                        }}
-                        className={`${showHoja && "show"}`}
                         onChange={(e) =>
                           setFieldValue("hojaDeVida", e.target.files[0])
                         }
                       />
+                      {values.hojaDeVida? <p>{values.hojaDeVida.name}</p> : <p>Cargar archivo</p> }
+                      <FaUpload/>
                     </DivInputFile>
                     <StyledError>
-                      {touched.hojaDeVida &&
-                        errors.hojaDeVida &&
+                      { showHoja &&
                         errors.hojaDeVida}
                     </StyledError>
                     <Field
