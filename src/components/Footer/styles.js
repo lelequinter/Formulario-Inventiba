@@ -14,6 +14,10 @@ export const Container = styled.div`
   background: #063954;
   border-top: 15px solid;
   border-color: #9cca1f;
+
+  @media (max-width: 400px) {
+    height: 120px;
+  }
 `;
 
 export const FooterRing = styled.div`
