@@ -23,6 +23,12 @@ export const Container = styled.div`
   margin-right: 15%;
   width: 70%;
 
+  @media (max-width: 1000px) {
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+  }
+
   @media (max-width: 420px) {
     margin-left: 5%;
     margin-right: 5%;
@@ -37,6 +43,11 @@ export const DivForm = styled.div`
   justify-content: center;
   margin: 30px 25% 30px 25%;
   width: 50%;
+
+  @media (max-width: 1000px) {
+    margin: 30px 15% 30px 15%;
+    width: 70%;
+  }
 
   @media (max-width: 420px) {
     margin: 30px 5% 30px 5%;
