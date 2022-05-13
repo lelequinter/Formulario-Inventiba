@@ -25,8 +25,8 @@ export const Formulario = () => {
   const [showFechaIngreso, setShowFechaIngreso] = useState(false);
 
   const formRef = useRef(null);
-  const certificadoRef = useRef(null);
   const hojaRef = useRef(null);
+  const certificadoRef = useRef(null);
 
   const handleAnterior = () => {
     setStep(() => step - 1);
@@ -241,7 +241,7 @@ export const Formulario = () => {
               errores.tipoCuenta = "Ingrese su tipo de cuenta bancaria";
             }
 
-            // Validacion de Certificado bancario
+            //Validacion de Certificado bancario
             if (!valores.certificadoBancario) {
               errores.certificadoBancario =
                 "Adjunte su certificado de cuenta bancaria";
@@ -264,10 +264,10 @@ export const Formulario = () => {
             //Envio del formulario
             console.log(values);
             emailjs
-              .sendForm(
+              .send(
                 "service_hsmh3dj",
                 "template_i6a61qv",
-                formRef.current,
+                values,
                 "_pmKLtKc8gu3H24R6"
               )
               .then((res) => {
