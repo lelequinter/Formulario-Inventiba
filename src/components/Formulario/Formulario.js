@@ -264,10 +264,10 @@ export const Formulario = () => {
             //Envio del formulario
             console.log(values);
             emailjs
-              .send(
+              .sendForm(
                 "service_hsmh3dj",
                 "template_i6a61qv",
-                values,
+                formRef.current,
                 "_pmKLtKc8gu3H24R6"
               )
               .then((res) => {
@@ -277,13 +277,7 @@ export const Formulario = () => {
             resetForm();
           }}
         >
-          {({
-            handleSubmit,
-            values,
-            touched,
-            errors,
-            setFieldValue,
-          }) => (
+          {({ handleSubmit, values, touched, errors, setFieldValue }) => (
             <Form onSubmit={handleSubmit} ref={formRef}>
               <DivForm>
                 {step === 1 && (
@@ -619,11 +613,14 @@ export const Formulario = () => {
                     </StyledError>
                     <DivInputFile
                       className={`${
-                        errors.certificadoBancario && "InputError"
+                        (touched.certificadoBancario || showCertificado) &&
+                        errors.certificadoBancario &&
+                        "InputError"
                       }`}
                       onClick={() => {
                         certificadoRef.current.click();
-                        errors.certificadoBancario = "Adjunte su certificado de cuenta bancaria";
+                        errors.certificadoBancario =
+                          "Adjunte su certificado de cuenta bancaria";
                         !values.hojaDeVida && setShowCertificado(true);
                       }}
                     >
@@ -652,11 +649,16 @@ export const Formulario = () => {
                       <FaUpload />
                     </DivInputFile>
                     <StyledError>
-                      {errors.certificadoBancario ||
-                        (showCertificado && errors.certificadoBancario)}
+                      {(touched.certificadoBancario || showCertificado) &&
+                        errors.certificadoBancario &&
+                        errors.certificadoBancario}
                     </StyledError>
                     <DivInputFile
-                      className={`${errors.hojaDeVida && "InputError"}`}
+                      className={`${
+                        (touched.hojaDeVida || showHoja) &&
+                        errors.hojaDeVida &&
+                        "InputError"
+                      }`}
                       onClick={() => {
                         hojaRef.current.click();
                         errors.hojaDeVida = "Adjunte su hoja de vida";
@@ -683,7 +685,8 @@ export const Formulario = () => {
                       <FaUpload />
                     </DivInputFile>
                     <StyledError>
-                      {errors.hojaDeVida || (showHoja && errors.hojaDeVida)}
+                      {(touched.hojaDeVida || showHoja) &&
+                        (errors.hojaDeVida && errors.hojaDeVida)}
                     </StyledError>
                     <Field
                       type="text"
