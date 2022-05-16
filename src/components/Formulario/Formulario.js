@@ -1,10 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { firebaseStorage } from "../Firebase/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Formik, Form, Field } from "formik";
-import { FaChevronRight, FaChevronLeft, FaUpload } from "react-icons/fa";
+import {
+  FaChevronRight,
+  FaChevronLeft,
+  FaUpload,
+  FaCheckCircle,
+} from "react-icons/fa";
 import { Steps } from "../Steps/Steps";
+import { SpinnerDotted } from "spinners-react";
 import "./styles.css";
 import {
   Wrapper,
@@ -28,6 +34,9 @@ export const Formulario = () => {
 
   const [urlHdV, setUrlHdV] = useState("");
   const [urlCertificado, setUrlCertificado] = useState("");
+
+  const [done, setDone] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const formRef = useRef(null);
   const hojaRef = useRef(null);
@@ -68,15 +77,19 @@ export const Formulario = () => {
           name === "hojaDeVida"
             ? setUrlHdV(downloadURL)
             : setUrlCertificado(downloadURL);
-          // console.log(urlHdV);
-          // URLFile = downloadURL;
-          // console.log("File available at", downloadURL);
         });
       }
     );
 
     return URLFile;
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setDone(false);
+    }, 2000);
+  }, [done]);
+
   return (
     <Wrapper>
       <Container>
@@ -301,14 +314,14 @@ export const Formulario = () => {
             return errores;
           }}
           onSubmit={(values, { resetForm }) => {
-            // event.preventDefault();
             //Envio del formulario
+            setLoading(true);
             const urls = {
               urlCertifica: urlCertificado,
               urlHojadeVida: urlHdV,
             };
             const data = { ...values, ...urls };
-            console.log(data);
+            // console.log(data);
             emailjs
               .send(
                 "service_hsmh3dj",
@@ -316,13 +329,16 @@ export const Formulario = () => {
                 data,
                 "_pmKLtKc8gu3H24R6"
               )
-              .then((res) => {
+              .then(() => {
                 // console.log(res);
-                setStep(1);
+                setLoading(false);
+                setDone(true);
                 setShowHoja(false);
                 setShowCertificado(false);
                 setShowFechaRetiro(false);
                 setShowFechaIngreso(false);
+                setUrlCertificado("");
+                setUrlHdV("");
               })
               .catch((err) => console.log(err));
             resetForm();
@@ -799,7 +815,28 @@ export const Formulario = () => {
                     </Button>
                   )}
                   <>
-                    {step === 3 && <Button type="submit">Guardar</Button>}
+                    {step === 3 && (
+                      <Button
+                        type="submit"
+                        style={{ backgroundColor: done && "#9CCA1F" }}
+                      >
+                        {done ? (
+                          <>
+                            <p>Enviado</p> <FaCheckCircle size={20}/>
+                          </>
+                        ) : (
+                          "Guardar"
+                        )}
+                        {loading && (
+                          <SpinnerDotted
+                            size={20}
+                            thickness={100}
+                            speed={100}
+                            color="#fff"
+                          />
+                        )}
+                      </Button>
+                    )}
                     {step !== 3 && (
                       <Button type="button" onClick={handleSiguiente}>
                         <p>Siguiente</p> <FaChevronRight />
