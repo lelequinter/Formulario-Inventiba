@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
+import { firebaseStorage } from "../Firebase/firebase";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Formik, Form, Field } from "formik";
 import { FaChevronRight, FaChevronLeft, FaUpload } from "react-icons/fa";
 import { Steps } from "../Steps/Steps";
@@ -24,6 +26,9 @@ export const Formulario = () => {
   const [showFechaRetiro, setShowFechaRetiro] = useState(false);
   const [showFechaIngreso, setShowFechaIngreso] = useState(false);
 
+  const [urlHdV, setUrlHdV] = useState("");
+  const [urlCertificado, setUrlCertificado] = useState("");
+
   const formRef = useRef(null);
   const hojaRef = useRef(null);
   const certificadoRef = useRef(null);
@@ -36,6 +41,42 @@ export const Formulario = () => {
     setStep(() => step + 1);
   };
 
+  // var uploadTask;
+  function subirArchivo(file, name) {
+    if (!file) return;
+    console.log(name);
+    const storageRef = ref(
+      firebaseStorage,
+      `/files/${new Date() + "-" + file.name}`
+    );
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    // El evento donde comienza el control del estado de la subida
+    // Supervisar en cada instante
+    let URLFile = "";
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const prog = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        console.log(prog);
+      },
+      (error) => console.log(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          name === "hojaDeVida"
+            ? setUrlHdV(downloadURL)
+            : setUrlCertificado(downloadURL);
+          // console.log(urlHdV);
+          // URLFile = downloadURL;
+          // console.log("File available at", downloadURL);
+        });
+      }
+    );
+
+    return URLFile;
+  }
   return (
     <Wrapper>
       <Container>
@@ -262,16 +303,26 @@ export const Formulario = () => {
           onSubmit={(values, { resetForm }) => {
             // event.preventDefault();
             //Envio del formulario
-            console.log(values);
+            const urls = {
+              urlCertifica: urlCertificado,
+              urlHojadeVida: urlHdV,
+            };
+            const data = { ...values, ...urls };
+            console.log(data);
             emailjs
-              .sendForm(
+              .send(
                 "service_hsmh3dj",
                 "template_i6a61qv",
-                formRef.current,
+                data,
                 "_pmKLtKc8gu3H24R6"
               )
               .then((res) => {
-                console.log(res);
+                // console.log(res);
+                setStep(1);
+                setShowHoja(false);
+                setShowCertificado(false);
+                setShowFechaRetiro(false);
+                setShowFechaIngreso(false);
               })
               .catch((err) => console.log(err));
             resetForm();
@@ -632,19 +683,24 @@ export const Formulario = () => {
                         id="certificadoBancario"
                         name="certificadoBancario"
                         placeholder="Certificado Bancario"
-                        onChange={(e) =>
+                        accept="application/pdf"
+                        onChange={(e) => {
+                          subirArchivo(
+                            e.target.files[0],
+                            "certificadoBancario"
+                          );
                           setFieldValue(
                             "certificadoBancario",
                             e.target.files[0]
-                          )
-                        }
+                          );
+                        }}
                       />
                       {values.certificadoBancario ? (
                         <span className="scroll">
                           {values.certificadoBancario.name}
                         </span>
                       ) : (
-                        <span>Cargar archivo</span>
+                        <span>Cargar archivo (PDF)</span>
                       )}
                       <FaUpload />
                     </DivInputFile>
@@ -673,20 +729,23 @@ export const Formulario = () => {
                         id="hojaDeVida"
                         name="hojaDeVida"
                         placeholder="Hoja De Vida"
-                        onChange={(e) =>
-                          setFieldValue("hojaDeVida", e.target.files[0])
-                        }
+                        accept="application/pdf"
+                        onChange={(e) => {
+                          subirArchivo(e.target.files[0], "hojaDeVida");
+                          setFieldValue("hojaDeVida", e.target.files[0]);
+                        }}
                       />
                       {values.hojaDeVida ? (
                         <span className="scroll">{values.hojaDeVida.name}</span>
                       ) : (
-                        <span>Cargar archivo</span>
+                        <span>Cargar archivo (PDF)</span>
                       )}
                       <FaUpload />
                     </DivInputFile>
                     <StyledError>
                       {(touched.hojaDeVida || showHoja) &&
-                        (errors.hojaDeVida && errors.hojaDeVida)}
+                        errors.hojaDeVida &&
+                        errors.hojaDeVida}
                     </StyledError>
                     <Field
                       type="text"
