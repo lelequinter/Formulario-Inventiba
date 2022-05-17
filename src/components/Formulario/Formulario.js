@@ -38,6 +38,9 @@ export const Formulario = () => {
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [uploadCertificado, setUploadCertificado] = useState(false);
+  const [uploadHoja, setUploadHoja] = useState(false);
+
   const formRef = useRef(null);
   const hojaRef = useRef(null);
   const certificadoRef = useRef(null);
@@ -53,7 +56,8 @@ export const Formulario = () => {
   // var uploadTask;
   function subirArchivo(file, name) {
     if (!file) return;
-    console.log(name);
+    // console.log(name);
+    name === "hojaDeVida" ? setUploadHoja(true) : setUploadCertificado(true);
     const storageRef = ref(
       firebaseStorage,
       `/files/${new Date() + "-" + file.name}`
@@ -69,7 +73,10 @@ export const Formulario = () => {
         const prog = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
-        console.log(prog);
+        if (prog === 100) {
+          setUploadHoja(false);
+          setUploadCertificado(false);
+        }
       },
       (error) => console.log(error),
       () => {
@@ -88,6 +95,7 @@ export const Formulario = () => {
     setTimeout(() => {
       setDone(false);
     }, 2000);
+    console.log("SetDone ejecutado");
   }, [done]);
 
   return (
@@ -694,6 +702,7 @@ export const Formulario = () => {
                       <p>Certificado Bancario</p>
                       <input
                         hidden
+                        // disabled={uploadHoja? true: false}
                         ref={certificadoRef}
                         type="file"
                         id="certificadoBancario"
@@ -718,7 +727,7 @@ export const Formulario = () => {
                       ) : (
                         <span>Cargar archivo (PDF)</span>
                       )}
-                      <FaUpload />
+                      {uploadCertificado ? <SpinnerDotted size={25} color="#757575"/> : <FaUpload />}
                     </DivInputFile>
                     <StyledError>
                       {(touched.certificadoBancario || showCertificado) &&
@@ -740,6 +749,7 @@ export const Formulario = () => {
                       <p>Hoja de Vida</p>
                       <input
                         hidden
+                        // disabled={uploadCertificado? true: false}
                         ref={hojaRef}
                         type="file"
                         id="hojaDeVida"
@@ -756,7 +766,7 @@ export const Formulario = () => {
                       ) : (
                         <span>Cargar archivo (PDF)</span>
                       )}
-                      <FaUpload />
+                      {uploadHoja ? <SpinnerDotted size={25} color="#757575"/> : <FaUpload />}
                     </DivInputFile>
                     <StyledError>
                       {(touched.hojaDeVida || showHoja) &&
@@ -822,7 +832,7 @@ export const Formulario = () => {
                       >
                         {done ? (
                           <>
-                            <p>Enviado</p> <FaCheckCircle size={20}/>
+                            <p>Enviado</p> <FaCheckCircle size={20} />
                           </>
                         ) : (
                           "Guardar"
