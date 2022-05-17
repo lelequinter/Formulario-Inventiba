@@ -41,6 +41,9 @@ export const Formulario = () => {
   const [uploadCertificado, setUploadCertificado] = useState(false);
   const [uploadHoja, setUploadHoja] = useState(false);
 
+  const [errorUploadCertificado, setErrorUploadCertificado] = useState(false);
+  const [errorUploadHoja, setErrorUploadHoja] = useState(false);
+
   const formRef = useRef(null);
   const hojaRef = useRef(null);
   const certificadoRef = useRef(null);
@@ -55,7 +58,12 @@ export const Formulario = () => {
 
   // var uploadTask;
   function subirArchivo(file, name) {
-    if (!file || ((file.size/ 1024 /1024) > 1 )) return;
+    if (!file || file.size / 1024 / 1024 > 1) return;
+
+    // Reseteamos los errores en caso de que anteriormente se haya detectado alguno
+    setErrorUploadCertificado(false);
+    setErrorUploadHoja(false);
+
     // console.log(name);
     name === "hojaDeVida" ? setUploadHoja(true) : setUploadCertificado(true);
     const storageRef = ref(
@@ -74,11 +82,17 @@ export const Formulario = () => {
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
         if (prog === 100) {
-          setUploadHoja(false);
-          setUploadCertificado(false);
+          name === "hojaDeVida"
+            ? setUploadHoja(false)
+            : setUploadCertificado(false);
         }
       },
-      (error) => console.log(error),
+      (error) => {
+        name === "hojaDeVida" && setErrorUploadHoja(true);
+        error &&
+          name === "certificadoBancario" &&
+          setErrorUploadCertificado(true);
+      },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           name === "hojaDeVida"
@@ -287,7 +301,7 @@ export const Formulario = () => {
               errores.salarioReal = "Ingrese su salario real";
             } else if (!/^([0-9.,'"])*$/.test(valores.salarioReal)) {
               errores.salarioReal =
-                "El salario solo puede contener números o simbolos de separacion ";
+                "El salario solo puede contener números o simbolos de separacion";
             }
 
             // Validacion Numero Cuenta Bancaria
@@ -308,18 +322,31 @@ export const Formulario = () => {
               errores.certificadoBancario =
                 "Adjunte su certificado de cuenta bancaria";
             }
-            if((valores.certificadoBancario.size/ 1024 /1024) > 1 ){
+            if (valores.certificadoBancario.size / 1024 / 1024 > 1) {
+              errores.certificadoBancario = "El tamaño del PDF excede 1Mb";
+            }
+            if (uploadCertificado) {
               errores.certificadoBancario =
-                "El tamaño del PDF eccede 1Mb";
+                "No ha terminado de subir el documento";
+            }
+            if (errorUploadCertificado) {
+              errores.certificadoBancario =
+                "Ha ocurrido un error, vuelve a cargar el documento";
             }
 
             // Validacion de Hoja de Vida
             if (!valores.hojaDeVida) {
               errores.hojaDeVida = "Adjunte su hoja de vida";
             }
-            if((valores.hojaDeVida.size/ 1024 /1024) > 1 ){
+            if (valores.hojaDeVida.size / 1024 / 1024 > 1) {
+              errores.hojaDeVida = "El tamaño del PDF excede 1Mb";
+            }
+            if (uploadHoja) {
+              errores.hojaDeVida = "No ha terminado de subir el documento";
+            }
+            if (errorUploadHoja) {
               errores.hojaDeVida =
-                "El tamaño del PDF eccede 1Mb";
+                "Ha ocurrido un error, vuelve a cargar el documento";
             }
 
             // Validacion Tipo de Contratacion
@@ -701,6 +728,7 @@ export const Formulario = () => {
                         "InputError"
                       }`}
                       onClick={() => {
+                        setUrlCertificado("");
                         certificadoRef.current.click();
                         errors.certificadoBancario =
                           "Adjunte su certificado de cuenta bancaria";
@@ -735,7 +763,11 @@ export const Formulario = () => {
                       ) : (
                         <span>Cargar archivo (PDF)</span>
                       )}
-                      {uploadCertificado ? <SpinnerDotted size={25} color="#757575"/> : <FaUpload />}
+                      {uploadCertificado ? (
+                        <SpinnerDotted size={25} color="#757575" />
+                      ) : (
+                        <FaUpload />
+                      )}
                     </DivInputFile>
                     <StyledError>
                       {(touched.certificadoBancario || showCertificado) &&
@@ -749,6 +781,7 @@ export const Formulario = () => {
                         "InputError"
                       }`}
                       onClick={() => {
+                        setUrlHdV("");
                         hojaRef.current.click();
                         errors.hojaDeVida = "Adjunte su hoja de vida";
                         !values.hojaDeVida && setShowHoja(true);
@@ -774,7 +807,11 @@ export const Formulario = () => {
                       ) : (
                         <span>Cargar archivo (PDF)</span>
                       )}
-                      {uploadHoja ? <SpinnerDotted size={25} color="#757575"/> : <FaUpload />}
+                      {uploadHoja ? (
+                        <SpinnerDotted size={25} color="#757575" />
+                      ) : (
+                        <FaUpload />
+                      )}
                     </DivInputFile>
                     <StyledError>
                       {(touched.hojaDeVida || showHoja) &&
