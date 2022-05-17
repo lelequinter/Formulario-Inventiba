@@ -109,7 +109,7 @@ export const Formulario = () => {
     setTimeout(() => {
       setDone(false);
     }, 2000);
-    console.log("SetDone ejecutado");
+    // console.log("SetDone ejecutado");
   }, [done]);
 
   return (
@@ -322,7 +322,10 @@ export const Formulario = () => {
               errores.certificadoBancario =
                 "Adjunte su certificado de cuenta bancaria";
             }
-            if (valores.certificadoBancario.size / 1024 / 1024 > 1) {
+            if (
+              valores.certificadoBancario &&
+              valores.certificadoBancario.size / 1024 / 1024 > 1
+            ) {
               errores.certificadoBancario = "El tamaño del PDF excede 1Mb";
             }
             if (uploadCertificado) {
@@ -338,7 +341,10 @@ export const Formulario = () => {
             if (!valores.hojaDeVida) {
               errores.hojaDeVida = "Adjunte su hoja de vida";
             }
-            if (valores.hojaDeVida.size / 1024 / 1024 > 1) {
+            if (
+              valores.hojaDeVida &&
+              valores.hojaDeVida.size / 1024 / 1024 > 1
+            ) {
               errores.hojaDeVida = "El tamaño del PDF excede 1Mb";
             }
             if (uploadHoja) {
@@ -387,7 +393,14 @@ export const Formulario = () => {
             resetForm();
           }}
         >
-          {({ handleSubmit, values, touched, errors, setFieldValue }) => (
+          {({
+            handleSubmit,
+            values,
+            touched,
+            errors,
+            setFieldValue,
+            handleBlur,
+          }) => (
             <Form onSubmit={handleSubmit} ref={formRef}>
               <DivForm>
                 {step === 1 && (
@@ -722,6 +735,7 @@ export const Formulario = () => {
                         errors.tipoCuenta}
                     </StyledError>
                     <DivInputFile
+                      name="inputFileCertificado"
                       className={`${
                         (touched.certificadoBancario || showCertificado) &&
                         errors.certificadoBancario &&
@@ -732,8 +746,9 @@ export const Formulario = () => {
                         certificadoRef.current.click();
                         errors.certificadoBancario =
                           "Adjunte su certificado de cuenta bancaria";
-                        !values.hojaDeVida && setShowCertificado(true);
+                        !values.certificadoBancario && setShowCertificado(true);
                       }}
+                      onBlur={handleBlur}
                     >
                       <p>Certificado Bancario</p>
                       <input
