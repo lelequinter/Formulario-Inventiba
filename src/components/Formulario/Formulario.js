@@ -55,7 +55,7 @@ export const Formulario = () => {
 
   // var uploadTask;
   function subirArchivo(file, name) {
-    if (!file) return;
+    if (!file || ((file.size/ 1024 /1024) > 1 )) return;
     // console.log(name);
     name === "hojaDeVida" ? setUploadHoja(true) : setUploadCertificado(true);
     const storageRef = ref(
@@ -308,10 +308,18 @@ export const Formulario = () => {
               errores.certificadoBancario =
                 "Adjunte su certificado de cuenta bancaria";
             }
+            if((valores.certificadoBancario.size/ 1024 /1024) > 1 ){
+              errores.certificadoBancario =
+                "El tamaño del PDF eccede 1Mb";
+            }
 
             // Validacion de Hoja de Vida
             if (!valores.hojaDeVida) {
               errores.hojaDeVida = "Adjunte su hoja de vida";
+            }
+            if((valores.hojaDeVida.size/ 1024 /1024) > 1 ){
+              errores.hojaDeVida =
+                "El tamaño del PDF eccede 1Mb";
             }
 
             // Validacion Tipo de Contratacion
