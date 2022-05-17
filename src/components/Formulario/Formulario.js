@@ -66,10 +66,7 @@ export const Formulario = () => {
 
     // console.log(name);
     name === "hojaDeVida" ? setUploadHoja(true) : setUploadCertificado(true);
-    const storageRef = ref(
-      firebaseStorage,
-      `/${new Date() + "-" + file.name}`
-    );
+    const storageRef = ref(firebaseStorage, `/${new Date() + "-" + file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     // El evento donde comienza el control del estado de la subida
@@ -393,13 +390,7 @@ export const Formulario = () => {
             resetForm();
           }}
         >
-          {({
-            handleSubmit,
-            values,
-            touched,
-            errors,
-            setFieldValue,
-          }) => (
+          {({ handleSubmit, values, touched, errors, setFieldValue }) => (
             <Form onSubmit={handleSubmit} ref={formRef}>
               <DivForm>
                 {step === 1 && (
@@ -742,8 +733,9 @@ export const Formulario = () => {
                       onClick={() => {
                         setUrlCertificado("");
                         certificadoRef.current.click();
-                        errors.certificadoBancario =
-                          "Adjunte su certificado de cuenta bancaria";
+                        !values.certificadoBancario &&
+                          (errors.certificadoBancario =
+                            "Adjunte su certificado de cuenta bancaria");
                         !values.certificadoBancario && setShowCertificado(true);
                       }}
                     >
@@ -795,7 +787,8 @@ export const Formulario = () => {
                       onClick={() => {
                         setUrlHdV("");
                         hojaRef.current.click();
-                        errors.hojaDeVida = "Adjunte su hoja de vida";
+                        !values.hojaDeVida &&
+                          (errors.hojaDeVida = "Adjunte su hoja de vida");
                         !values.hojaDeVida && setShowHoja(true);
                       }}
                     >
