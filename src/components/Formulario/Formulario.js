@@ -68,7 +68,7 @@ export const Formulario = () => {
     name === "hojaDeVida" ? setUploadHoja(true) : setUploadCertificado(true);
     const storageRef = ref(
       firebaseStorage,
-      `/files/${new Date() + "-" + file.name}`
+      `/${new Date() + "-" + file.name}`
     );
     const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -399,7 +399,6 @@ export const Formulario = () => {
             touched,
             errors,
             setFieldValue,
-            handleBlur,
           }) => (
             <Form onSubmit={handleSubmit} ref={formRef}>
               <DivForm>
@@ -735,7 +734,6 @@ export const Formulario = () => {
                         errors.tipoCuenta}
                     </StyledError>
                     <DivInputFile
-                      name="inputFileCertificado"
                       className={`${
                         (touched.certificadoBancario || showCertificado) &&
                         errors.certificadoBancario &&
@@ -748,7 +746,6 @@ export const Formulario = () => {
                           "Adjunte su certificado de cuenta bancaria";
                         !values.certificadoBancario && setShowCertificado(true);
                       }}
-                      onBlur={handleBlur}
                     >
                       <p>Certificado Bancario</p>
                       <input
