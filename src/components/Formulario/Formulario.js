@@ -104,6 +104,14 @@ export const Formulario = () => {
     return URLFile;
   }
 
+  const CapitalizeString = (string) => {
+    const capitalize = string.split(" ").map((i) => {
+      return i.charAt(0).toUpperCase() + i.toLowerCase().slice(1);
+    });
+
+    return capitalize.toString().replace(/,/g, " ");
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setDone(false);
@@ -373,6 +381,7 @@ export const Formulario = () => {
             const urls = {
               urlCertifica: urlCertificado,
               urlHojadeVida: urlHdV,
+              vinculadoStr: values.vinculado ? "Sí" : "No",
             };
             const data = { ...values, ...urls };
             // console.log(data);
@@ -435,6 +444,9 @@ export const Formulario = () => {
                       className={`${
                         touched.nombres && errors.nombres && "InputError"
                       }`}
+                      onInput={(e) => {
+                        e.target.value = CapitalizeString(e.target.value);
+                      }}
                     />
                     <StyledError>
                       {touched.nombres && errors.nombres && errors.nombres}
@@ -447,6 +459,9 @@ export const Formulario = () => {
                       className={`${
                         touched.apellidos && errors.apellidos && "InputError"
                       }`}
+                      onInput={(e) => {
+                        e.target.value = CapitalizeString(e.target.value);
+                      }}
                     />
                     <StyledError>
                       {touched.apellidos &&
@@ -499,6 +514,9 @@ export const Formulario = () => {
                       className={`${
                         touched.direccion && errors.direccion && "InputError"
                       }`}
+                      onInput={(e) => {
+                        e.target.value = CapitalizeString(e.target.value);
+                      }}
                     />
                     <StyledError>
                       {touched.direccion &&
@@ -582,6 +600,9 @@ export const Formulario = () => {
                         errors.ciudadNacimiento &&
                         "InputError"
                       }`}
+                      onInput={(e) => {
+                        e.target.value = CapitalizeString(e.target.value);
+                      }}
                     />
                     <StyledError>
                       {touched.ciudadNacimiento &&
@@ -598,6 +619,9 @@ export const Formulario = () => {
                         errors.personaContacto &&
                         "InputError"
                       }`}
+                      onInput={(e) => {
+                        e.target.value = CapitalizeString(e.target.value);
+                      }}
                     />
                     <StyledError>
                       {touched.personaContacto &&
@@ -614,6 +638,9 @@ export const Formulario = () => {
                         errors.parentezcoContacto &&
                         "InputError"
                       }`}
+                      onInput={(e) => {
+                        e.target.value = CapitalizeString(e.target.value);
+                      }}
                     />
                     <StyledError>
                       {touched.parentezcoContacto &&
@@ -642,6 +669,9 @@ export const Formulario = () => {
                       name="eps"
                       placeholder="EPS"
                       className={`${touched.eps && errors.eps && "InputError"}`}
+                      onInput={(e) => {
+                        e.target.value = CapitalizeString(e.target.value);
+                      }}
                     />
                     <StyledError>
                       {touched.eps && errors.eps && errors.eps}
@@ -654,6 +684,9 @@ export const Formulario = () => {
                       className={`${
                         touched.pension && errors.pension && "InputError"
                       }`}
+                      onInput={(e) => {
+                        e.target.value = CapitalizeString(e.target.value);
+                      }}
                     />
                     <StyledError>
                       {touched.pension && errors.pension && errors.pension}
@@ -673,6 +706,9 @@ export const Formulario = () => {
                         errors.cajaCompensacion &&
                         "InputError"
                       }`}
+                      onInput={(e) => {
+                        e.target.value = CapitalizeString(e.target.value);
+                      }}
                     />
                     <StyledError>
                       {touched.cajaCompensacion &&
@@ -726,6 +762,9 @@ export const Formulario = () => {
                       className={`${
                         touched.tipoCuenta && errors.tipoCuenta && "InputError"
                       }`}
+                      onInput={(e) => {
+                        e.target.value = CapitalizeString(e.target.value);
+                      }}
                     />
                     <StyledError>
                       {touched.tipoCuenta &&
@@ -869,6 +908,10 @@ export const Formulario = () => {
                         name="vinculado"
                         placeholder="Vinculado"
                         className={"show"}
+                        // onClick={(e) => {
+                        //   console.log(typeof e.target.value);
+
+                        // }}
                       />
                     </DivInputFile>
                   </>
@@ -1012,11 +1055,7 @@ export const Formulario = () => {
                         <span>Fecha de Retiro</span>
                       </Col>
                       <Col>
-                        {!values.fechaRetiro ? (
-                          <p>---</p>
-                        ) : (
-                          <p>{values.fechaRetiro}</p>
-                        )}
+                        <p>{values.fechaRetiro}</p>
                       </Col>
                     </Row>
                     <Row>
@@ -1120,11 +1159,7 @@ export const Formulario = () => {
                         <span>Salario Cotizado</span>
                       </Col>
                       <Col>
-                        {!values.salarioCotizado ? (
-                          <p>---</p>
-                        ) : (
-                          <p>{values.salarioCotizado}</p>
-                        )}
+                        <p>{values.salarioCotizado}</p>
                       </Col>
                     </Row>
                     <Row>
@@ -1182,11 +1217,7 @@ export const Formulario = () => {
                         <span>Link a Portafolio</span>
                       </Col>
                       <Col>
-                        {!values.portafolio ? (
-                          <p>---</p>
-                        ) : (
-                          <p>{values.portafolio}</p>
-                        )}
+                        <p>{values.portafolio}</p>
                       </Col>
                     </Row>
                     <Row>
@@ -1206,11 +1237,7 @@ export const Formulario = () => {
                         <span>Vinculado</span>
                       </Col>
                       <Col>
-                        <input
-                          disabled
-                          type="checkbox"
-                          checked={values.vinculado ? true : false}
-                        ></input>
+                        {values.vinculado ? <p>Sí</p> : <p>No</p>}
                       </Col>
                     </Row>
                   </>
