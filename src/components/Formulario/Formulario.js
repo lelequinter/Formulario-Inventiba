@@ -23,6 +23,8 @@ import {
   DivInputFile,
   DivInputDate,
   StyledError,
+  Row,
+  Col,
 } from "./styles";
 
 export const Formulario = () => {
@@ -114,12 +116,18 @@ export const Formulario = () => {
       <Container>
         <StyledTitle>
           <h1>Nuevo Colaborador</h1>
-          <h2>
-            Ingresa los datos a continuación, incluyendo hoja de vida,
-            portafolio y certificado bancario.
-          </h2>
+          {step !== 4 ? (
+            <h2>
+              Ingresa los datos a continuación, incluyendo hoja de vida,
+              portafolio y certificado bancario.
+            </h2>
+          ) : (
+            <h2>
+              Por favor confirma que todos los datos ingresados son correctos
+            </h2>
+          )}
         </StyledTitle>
-        <Steps step={step} />
+        {step !== 4 ? <Steps step={step} /> : ""}
         <Formik
           initialValues={{
             correo: "",
@@ -843,10 +851,10 @@ export const Formulario = () => {
                       }`}
                     >
                       <option value="">Tipo de Contratación</option>
-                      <option value="indefinido">Indefinido</option>
-                      <option value="servicios">Servicios</option>
-                      <option value="freelance">Freelance</option>
-                      <option value="definido">Definido</option>
+                      <option value="Indefinido">Indefinido</option>
+                      <option value="Servicios">Servicios</option>
+                      <option value="Freelance">Freelance</option>
+                      <option value="Definido">Definido</option>
                     </Field>
                     <StyledError>
                       {touched.tipoContratacion &&
@@ -865,6 +873,348 @@ export const Formulario = () => {
                     </DivInputFile>
                   </>
                 )}
+                {step === 4 && (
+                  <>
+                    <Row>
+                      <Col>
+                        <span>Correo</span>
+                      </Col>
+                      <Col>
+                        {errors.correo ? (
+                          <StyledError>{errors.correo}</StyledError>
+                        ) : (
+                          <p>{values.correo}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Cédula</span>
+                      </Col>
+                      <Col>
+                        {errors.cedula ? (
+                          <StyledError>{errors.cedula}</StyledError>
+                        ) : (
+                          <p>{values.cedula}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Nombres</span>
+                      </Col>
+                      <Col>
+                        {errors.nombres ? (
+                          <StyledError>{errors.nombres}</StyledError>
+                        ) : (
+                          <p>{values.nombres}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Apellidos</span>
+                      </Col>
+                      <Col>
+                        {errors.apellidos ? (
+                          <StyledError>{errors.apellidos}</StyledError>
+                        ) : (
+                          <p>{values.apellidos}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Email Corporativo</span>
+                      </Col>
+                      <Col>
+                        {errors.emailcorp ? (
+                          <StyledError>{errors.emailcorp}</StyledError>
+                        ) : (
+                          <p>{values.emailcorp}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Email Alternativo</span>
+                      </Col>
+                      <Col>
+                        {errors.emailalt ? (
+                          <StyledError>{errors.emailalt}</StyledError>
+                        ) : (
+                          <p>{values.emailalt}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Skype</span>
+                      </Col>
+                      <Col>
+                        {errors.skype ? (
+                          <StyledError>{errors.skype}</StyledError>
+                        ) : (
+                          <p>{values.skype}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Dirección Fisica</span>
+                      </Col>
+                      <Col>
+                        {errors.direccion ? (
+                          <StyledError>{errors.direccion}</StyledError>
+                        ) : (
+                          <p>{values.direccion}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Teléfono</span>
+                      </Col>
+                      <Col>
+                        {errors.telefono ? (
+                          <StyledError>{errors.telefono}</StyledError>
+                        ) : (
+                          <p>{values.telefono}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Celular</span>
+                      </Col>
+                      <Col>
+                        {errors.celular ? (
+                          <StyledError>{errors.celular}</StyledError>
+                        ) : (
+                          <p>{values.celular}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Fecha de Ingreso</span>
+                      </Col>
+                      <Col>
+                        {errors.fechaIngreso ? (
+                          <StyledError>{errors.fechaIngreso}</StyledError>
+                        ) : (
+                          <p>{values.fechaIngreso}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Fecha de Retiro</span>
+                      </Col>
+                      <Col>
+                        {!values.fechaRetiro ? (
+                          <p>---</p>
+                        ) : (
+                          <p>{values.fechaRetiro}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Ciudad de Nacimiento</span>
+                      </Col>
+                      <Col>
+                        {errors.ciudadNacimiento ? (
+                          <StyledError>{errors.ciudadNacimiento}</StyledError>
+                        ) : (
+                          <p>{values.ciudadNacimiento}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Persona de Contacto</span>
+                      </Col>
+                      <Col>
+                        {errors.personaContacto ? (
+                          <StyledError>{errors.personaContacto}</StyledError>
+                        ) : (
+                          <p>{values.personaContacto}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Parentezco del Contacto</span>
+                      </Col>
+                      <Col>
+                        {errors.parentezcoContacto ? (
+                          <StyledError>{errors.parentezcoContacto}</StyledError>
+                        ) : (
+                          <p>{values.parentezcoContacto}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Teléfono del Contacto</span>
+                      </Col>
+                      <Col>
+                        {errors.telefonoContacto ? (
+                          <StyledError>{errors.telefonoContacto}</StyledError>
+                        ) : (
+                          <p>{values.telefonoContacto}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Eps</span>
+                      </Col>
+                      <Col>
+                        {errors.eps ? (
+                          <StyledError>{errors.eps}</StyledError>
+                        ) : (
+                          <p>{values.eps}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Pension</span>
+                      </Col>
+                      <Col>
+                        {errors.pension ? (
+                          <StyledError>{errors.pension}</StyledError>
+                        ) : (
+                          <p>{values.pension}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Caja de Compensacion</span>
+                      </Col>
+                      <Col>
+                        {errors.cajaCompensacion ? (
+                          <StyledError>{errors.cajaCompensacion}</StyledError>
+                        ) : (
+                          <p>{values.cajaCompensacion}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Salario Real</span>
+                      </Col>
+                      <Col>
+                        {errors.salarioReal ? (
+                          <StyledError>{errors.salarioReal}</StyledError>
+                        ) : (
+                          <p>{values.salarioReal}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Salario Cotizado</span>
+                      </Col>
+                      <Col>
+                        {!values.salarioCotizado ? (
+                          <p>---</p>
+                        ) : (
+                          <p>{values.salarioCotizado}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Número de Cuenta Bancaria</span>
+                      </Col>
+                      <Col>
+                        {errors.numeroCuenta ? (
+                          <StyledError>{errors.numeroCuenta}</StyledError>
+                        ) : (
+                          <p>{values.numeroCuenta}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Tipo de Cuenta</span>
+                      </Col>
+                      <Col>
+                        {errors.tipoCuenta ? (
+                          <StyledError>{errors.tipoCuenta}</StyledError>
+                        ) : (
+                          <p>{values.tipoCuenta}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Certificado Bancario</span>
+                      </Col>
+                      <Col>
+                        {errors.certificadoBancario ? (
+                          <StyledError>
+                            {errors.certificadoBancario}
+                          </StyledError>
+                        ) : (
+                          <p>{values.certificadoBancario.name}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Hoja de Vida</span>
+                      </Col>
+                      <Col>
+                        {errors.hojaDeVida ? (
+                          <StyledError>{errors.hojaDeVida}</StyledError>
+                        ) : (
+                          <p>{values.hojaDeVida.name}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Link a Portafolio</span>
+                      </Col>
+                      <Col>
+                        {!values.portafolio ? (
+                          <p>---</p>
+                        ) : (
+                          <p>{values.portafolio}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Tipo de Contratación</span>
+                      </Col>
+                      <Col>
+                        {errors.tipoContratacion ? (
+                          <StyledError>{errors.tipoContratacion}</StyledError>
+                        ) : (
+                          <p>{values.tipoContratacion}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Vinculado</span>
+                      </Col>
+                      <Col>
+                        <input
+                          disabled
+                          type="checkbox"
+                          checked={values.vinculado ? true : false}
+                        ></input>
+                      </Col>
+                    </Row>
+                  </>
+                )}
                 <ButtonsSection>
                   {step === 1 ? (
                     <VoidDiv />
@@ -875,7 +1225,7 @@ export const Formulario = () => {
                     </Button>
                   )}
                   <>
-                    {step === 3 && (
+                    {step === 4 && (
                       <Button
                         type="submit"
                         style={{ backgroundColor: done && "#9CCA1F" }}
@@ -897,7 +1247,7 @@ export const Formulario = () => {
                         )}
                       </Button>
                     )}
-                    {step !== 3 && (
+                    {step !== 4 && (
                       <Button type="button" onClick={handleSiguiente}>
                         <p>Siguiente</p> <FaChevronRight />
                       </Button>

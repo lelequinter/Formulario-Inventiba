@@ -4,7 +4,7 @@ import BgBody from "../../imgs/background-body.jpg";
 export const Wrapper = styled.div`
   background: url(${BgBody});
   background-repeat: no-repeat;
-  background-size: 100% 55%;
+  background-size: 100% 60vh;
   padding-top: 80px;
 
   @media (max-width: 420px) {
@@ -33,6 +33,32 @@ export const Container = styled.div`
     margin-left: 5%;
     margin-right: 5%;
     width: 90%;
+  }
+`;
+
+export const Row = styled.div`
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  height: 45px;
+`;
+export const Col = styled.div`
+  float: left;
+  width: 50%;
+  span{
+    font-weight: bold;
+    color: #5A5A5A;
+  }
+  p{
+    color: #707070;
+  }
+  input{
+    box-shadow: none !important;
   }
 `;
 
@@ -133,9 +159,9 @@ export const DivInputFile = styled.div`
     }
   }
 
-  span{
+  span {
     max-width: 200px;
-    
+
     @media (max-width: 750px) {
       max-width: 100px;
     }
