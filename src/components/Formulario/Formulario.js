@@ -1128,6 +1128,18 @@ export const Formulario = () => {
                     </Row>
                     <Row>
                       <Col>
+                        <span>Fecha de Nacimiento</span>
+                      </Col>
+                      <Col>
+                        {errors.fechaNacimiento ? (
+                          <StyledError>{errors.fechaNacimiento}</StyledError>
+                        ) : (
+                          <p>{values.fechaNacimiento}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
                         <span>Nombres</span>
                       </Col>
                       <Col>
@@ -1188,13 +1200,25 @@ export const Formulario = () => {
                     </Row>
                     <Row>
                       <Col>
-                        <span>Dirección Fisica</span>
+                        <span>Dirección de Residencia</span>
                       </Col>
                       <Col>
                         {errors.direccion ? (
                           <StyledError>{errors.direccion}</StyledError>
                         ) : (
                           <p>{values.direccion}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Ciudad de Residencia</span>
+                      </Col>
+                      <Col>
+                        {errors.ciudadResidencia ? (
+                          <StyledError>{errors.ciudadResidencia}</StyledError>
+                        ) : (
+                          <p>{values.ciudadResidencia}</p>
                         )}
                       </Col>
                     </Row>
@@ -1316,6 +1340,14 @@ export const Formulario = () => {
                     </Row>
                     <Row>
                       <Col>
+                        <span>Arl</span>
+                      </Col>
+                      <Col>
+                        <p>{values.arl}</p>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
                         <span>Caja de Compensacion</span>
                       </Col>
                       <Col>
@@ -1328,7 +1360,7 @@ export const Formulario = () => {
                     </Row>
                     <Row>
                       <Col>
-                        <span>Salario Real</span>
+                        <span>Salario Acordado</span>
                       </Col>
                       <Col>
                         {errors.salarioAcordado ? (
