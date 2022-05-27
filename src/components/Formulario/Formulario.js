@@ -33,6 +33,7 @@ export const Formulario = () => {
   const [showCertificado, setShowCertificado] = useState(false);
   const [showFechaRetiro, setShowFechaRetiro] = useState(false);
   const [showFechaIngreso, setShowFechaIngreso] = useState(false);
+  const [showFechaNacimiento, setShowFechaNacimiento] = useState(false);
 
   const [urlHdV, setUrlHdV] = useState("");
   const [urlCertificado, setUrlCertificado] = useState("");
@@ -45,6 +46,10 @@ export const Formulario = () => {
 
   const [errorUploadCertificado, setErrorUploadCertificado] = useState(false);
   const [errorUploadHoja, setErrorUploadHoja] = useState(false);
+
+  const [validacionStepOne, setValidacionStepOne] = useState(false);
+  const [validacionStepTwo, setValidacionStepTwo] = useState(false);
+  const [validacionStepThree, setValidacionStepThree] = useState(false);
 
   const formRef = useRef(null);
   const hojaRef = useRef(null);
@@ -115,7 +120,8 @@ export const Formulario = () => {
   useEffect(() => {
     setTimeout(() => {
       setDone(false);
-    }, 2000);
+      setStep(1);
+    }, 4000);
     // console.log("SetDone ejecutado");
   }, [done]);
 
@@ -140,12 +146,14 @@ export const Formulario = () => {
           initialValues={{
             correo: "",
             cedula: "",
+            fechaNacimiento: "",
             nombres: "",
             apellidos: "",
             emailcorp: "",
             emailalt: "",
             skype: "",
             direccion: "",
+            ciudadResidencia: "",
             telefono: "",
             celular: "",
             fechaIngreso: "",
@@ -156,14 +164,16 @@ export const Formulario = () => {
             telefonoContacto: "",
             eps: "",
             pension: "",
+            arl: "",
             cajaCompensacion: "",
-            salarioReal: "",
+            salarioAcordado: "",
             salarioCotizado: "",
             numeroCuenta: "",
             tipoCuenta: "",
             certificadoBancario: "",
             hojaDeVida: "",
             portafolio: "",
+            repositorio: "",
             tipoContratacion: "",
             vinculado: false,
           }}
@@ -171,16 +181,16 @@ export const Formulario = () => {
             let errores = {};
 
             // Validacion correo
-            if (!valores.correo) {
-              errores.correo = "Ingrese su correo";
-            } else if (
-              !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-                valores.correo
-              )
-            ) {
-              errores.correo =
-                "El correo solo puede contener letras, números, puntos y guiones";
-            }
+            // if (!valores.correo) {
+            //   errores.correo = "Ingrese su correo";
+            // } else if (
+            //   !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
+            //     valores.correo
+            //   )
+            // ) {
+            //   errores.correo =
+            //     "El correo solo puede contener letras, números, puntos y guiones";
+            // }
 
             // Validacion Documento de identidad
             if (!valores.cedula) {
@@ -188,6 +198,11 @@ export const Formulario = () => {
             } else if (!/^([0-9])*$/.test(valores.cedula)) {
               errores.cedula =
                 "El documento de identidad solo puede contener números";
+            }
+
+            // Validacion Fecha de Nacimiento
+            if (!valores.fechaNacimiento) {
+              errores.fechaNacimiento = "Ingrese una fecha";
             }
 
             // Validacion Nombres
@@ -237,7 +252,12 @@ export const Formulario = () => {
 
             // Validacion Direccion
             if (!valores.direccion) {
-              errores.direccion = "Ingrese su dirreción";
+              errores.direccion = "Ingrese su dirección de residencia";
+            }
+
+            // VAlidacion ciudad de residencia
+            if (!valores.ciudadResidencia) {
+              errores.ciudadResidencia = "Ingrese su ciudad de residencia";
             }
 
             // Validacion Telefono
@@ -303,19 +323,24 @@ export const Formulario = () => {
               errores.pension = "Ingrese el nombre de su fondo de pensiones";
             }
 
+            // Validacion ARL
+            // if (!valores.arl) {
+            //   errores.arl = "Ingrese el nombre de su ARL";
+            // }
+
             // Validacion Caja de Compensacion
-            if (!valores.cajaCompensacion) {
-              errores.cajaCompensacion =
-                "Ingrese el nombre de su caja de compensación";
-            }
+            // if (!valores.cajaCompensacion) {
+            //   errores.cajaCompensacion =
+            //     "Ingrese el nombre de su caja de compensación";
+            // }
 
             // Validacion Salario Real
-            if (!valores.salarioReal) {
-              errores.salarioReal = "Ingrese su salario real";
-            } else if (!/^([0-9.,'"])*$/.test(valores.salarioReal)) {
-              errores.salarioReal =
-                "El salario solo puede contener números o simbolos de separacion";
-            }
+            // if (!valores.salarioAcordado) {
+            //   errores.salarioAcordado = "Ingrese su salario real";
+            // } else if (!/^([0-9.,'"])*$/.test(valores.salarioAcordado)) {
+            //   errores.salarioAcordado =
+            //     "El salario solo puede contener números o simbolos de separacion";
+            // }
 
             // Validacion Numero Cuenta Bancaria
             if (!valores.numeroCuenta) {
@@ -373,6 +398,15 @@ export const Formulario = () => {
               errores.tipoContratacion = "Seleccione el tipo de contratación";
             }
 
+            // Validacion portafolio y repositorio
+            if (!valores.portafolio) {
+              errores.portafolio = "Agregue la URL de su portafolio";
+            }
+
+            if (!valores.repositorio) {
+              errores.repositorio = "Agregue la URL de su repositorio";
+            }
+
             return errores;
           }}
           onSubmit={(values, { resetForm }) => {
@@ -400,41 +434,85 @@ export const Formulario = () => {
                 setShowCertificado(false);
                 setShowFechaRetiro(false);
                 setShowFechaIngreso(false);
+                setShowFechaNacimiento(false);
                 setUrlCertificado("");
                 setUrlHdV("");
+                setValidacionStepOne(false);
+                setValidacionStepTwo(false);
+                setValidacionStepThree(false);
+                resetForm();
               })
               .catch((err) => console.log(err));
-            resetForm();
           }}
         >
-          {({ handleSubmit, values, touched, errors, setFieldValue }) => (
+          {({
+            handleSubmit,
+            values,
+            touched,
+            errors,
+            setFieldValue,
+            handleBlur,
+          }) => (
             <Form onSubmit={handleSubmit} ref={formRef}>
               <DivForm>
                 {step === 1 && (
                   <>
-                    <Field
+                    {/* <Field
                       type="email"
                       id="correo"
                       name="correo"
                       placeholder="Correo"
                       className={`${
-                        touched.correo && errors.correo && "InputError"
+                        (touched.correo || validacionStepOne) &&
+                        errors.correo &&
+                        "InputError"
                       }`}
                     />
                     <StyledError>
-                      {touched.correo && errors.correo && errors.correo}
-                    </StyledError>
+                      {(touched.correo || validacionStepOne) &&
+                        errors.correo &&
+                        errors.correo}
+                    </StyledError> */}
                     <Field
                       type="text"
                       id="cedula"
                       name="cedula"
                       placeholder="Documento de identidad"
                       className={`${
-                        touched.cedula && errors.cedula && "InputError"
+                        (touched.cedula || validacionStepOne) &&
+                        errors.cedula &&
+                        "InputError"
                       }`}
                     />
                     <StyledError>
-                      {touched.cedula && errors.cedula && errors.cedula}
+                      {(touched.cedula || validacionStepOne) &&
+                        errors.cedula &&
+                        errors.cedula}
+                    </StyledError>
+                    <DivInputDate
+                      className={`${
+                        (touched.fechaNacimiento || validacionStepOne) &&
+                        errors.fechaNacimiento &&
+                        "InputError"
+                      }`}
+                    >
+                      <p>Fecha de Nacimiento</p>
+                      <Field
+                        type="date"
+                        id="fechaNacimiento"
+                        name="fechaNacimiento"
+                        placeholder="Fecha de Nacimineto"
+                        onMouseLeave={() => {
+                          values.fechaNacimiento &&
+                            setShowFechaNacimiento(true);
+                        }}
+                        className={`${showFechaNacimiento && "show"}`}
+                      />
+                    </DivInputDate>
+                    <StyledError>
+                      {(touched.fechaNacimiento || validacionStepOne) &&
+                        errors.fechaNacimiento &&
+                        errors.fechaNacimiento}
                     </StyledError>
                     <Field
                       type="text"
@@ -442,14 +520,18 @@ export const Formulario = () => {
                       name="nombres"
                       placeholder="Nombres"
                       className={`${
-                        touched.nombres && errors.nombres && "InputError"
+                        (touched.nombres || validacionStepOne) &&
+                        errors.nombres &&
+                        "InputError"
                       }`}
                       onInput={(e) => {
                         e.target.value = CapitalizeString(e.target.value);
                       }}
                     />
                     <StyledError>
-                      {touched.nombres && errors.nombres && errors.nombres}
+                      {(touched.nombres || validacionStepOne) &&
+                        errors.nombres &&
+                        errors.nombres}
                     </StyledError>
                     <Field
                       type="text"
@@ -457,14 +539,16 @@ export const Formulario = () => {
                       name="apellidos"
                       placeholder="Apellidos"
                       className={`${
-                        touched.apellidos && errors.apellidos && "InputError"
+                        (touched.apellidos || validacionStepOne) &&
+                        errors.apellidos &&
+                        "InputError"
                       }`}
                       onInput={(e) => {
                         e.target.value = CapitalizeString(e.target.value);
                       }}
                     />
                     <StyledError>
-                      {touched.apellidos &&
+                      {(touched.apellidos || validacionStepOne) &&
                         errors.apellidos &&
                         errors.apellidos}
                     </StyledError>
@@ -474,11 +558,13 @@ export const Formulario = () => {
                       name="emailcorp"
                       placeholder="Email Corporativo"
                       className={`${
-                        touched.emailcorp && errors.emailcorp && "InputError"
+                        (touched.emailcorp || validacionStepOne) &&
+                        errors.emailcorp &&
+                        "InputError"
                       }`}
                     />
                     <StyledError>
-                      {touched.emailcorp &&
+                      {(touched.emailcorp || validacionStepOne) &&
                         errors.emailcorp &&
                         errors.emailcorp}
                     </StyledError>
@@ -488,11 +574,15 @@ export const Formulario = () => {
                       name="emailalt"
                       placeholder="Email Alternativo"
                       className={`${
-                        touched.emailalt && errors.emailalt && "InputError"
+                        (touched.emailalt || validacionStepOne) &&
+                        errors.emailalt &&
+                        "InputError"
                       }`}
                     />
                     <StyledError>
-                      {touched.emailalt && errors.emailalt && errors.emailalt}
+                      {(touched.emailalt || validacionStepOne) &&
+                        errors.emailalt &&
+                        errors.emailalt}
                     </StyledError>
                     <Field
                       type="text"
@@ -500,28 +590,53 @@ export const Formulario = () => {
                       name="skype"
                       placeholder="Skype"
                       className={`${
-                        touched.skype && errors.skype && "InputError"
+                        (touched.skype || validacionStepOne) &&
+                        errors.skype &&
+                        "InputError"
                       }`}
                     />
                     <StyledError>
-                      {touched.skype && errors.skype && errors.skype}
+                      {(touched.skype || validacionStepOne) &&
+                        errors.skype &&
+                        errors.skype}
                     </StyledError>
                     <Field
                       type="text"
                       id="direccion"
                       name="direccion"
-                      placeholder="Dirección Física"
+                      placeholder="Dirección de Residencia"
                       className={`${
-                        touched.direccion && errors.direccion && "InputError"
+                        (touched.direccion || validacionStepOne) &&
+                        errors.direccion &&
+                        "InputError"
                       }`}
                       onInput={(e) => {
                         e.target.value = CapitalizeString(e.target.value);
                       }}
                     />
                     <StyledError>
-                      {touched.direccion &&
+                      {(touched.direccion || validacionStepOne) &&
                         errors.direccion &&
                         errors.direccion}
+                    </StyledError>
+                    <Field
+                      type="text"
+                      id="ciudadResidencia"
+                      name="ciudadResidencia"
+                      placeholder="Ciudad de Residencia"
+                      className={`${
+                        (touched.ciudadResidencia || validacionStepOne) &&
+                        errors.ciudadResidencia &&
+                        "InputError"
+                      }`}
+                      onInput={(e) => {
+                        e.target.value = CapitalizeString(e.target.value);
+                      }}
+                    />
+                    <StyledError>
+                      {(touched.ciudadResidencia || validacionStepOne) &&
+                        errors.ciudadResidencia &&
+                        errors.ciudadResidencia}
                     </StyledError>
                     <Field
                       type="text"
@@ -529,13 +644,17 @@ export const Formulario = () => {
                       name="telefono"
                       placeholder="Teléfono"
                       className={`${
-                        touched.telefono && errors.telefono && "InputError"
+                        (touched.telefono || validacionStepOne) &&
+                        errors.telefono &&
+                        "InputError"
                       }`}
                     />
                     <StyledError>
-                      {touched.telefono && errors.telefono && errors.telefono}
+                      {(touched.telefono || validacionStepOne) &&
+                        errors.telefono &&
+                        errors.telefono}
                     </StyledError>
-                    <VoidDiv />
+                    {/* <VoidDiv /> */}
                   </>
                 )}
                 {step === 2 && (
@@ -546,15 +665,19 @@ export const Formulario = () => {
                       name="celular"
                       placeholder="Celular"
                       className={`${
-                        touched.celular && errors.celular && "InputError"
+                        (touched.celular || validacionStepTwo) &&
+                        errors.celular &&
+                        "InputError"
                       }`}
                     />
                     <StyledError>
-                      {touched.celular && errors.celular && errors.celular}
+                      {(touched.celular || validacionStepTwo) &&
+                        errors.celular &&
+                        errors.celular}
                     </StyledError>
                     <DivInputDate
                       className={`${
-                        touched.fechaIngreso &&
+                        (touched.fechaIngreso || validacionStepTwo) &&
                         errors.fechaIngreso &&
                         "InputError"
                       }`}
@@ -572,7 +695,7 @@ export const Formulario = () => {
                       />
                     </DivInputDate>
                     <StyledError>
-                      {touched.fechaIngreso &&
+                      {(touched.fechaIngreso || validacionStepTwo) &&
                         errors.fechaIngreso &&
                         errors.fechaIngreso}
                     </StyledError>
@@ -596,7 +719,7 @@ export const Formulario = () => {
                       name="ciudadNacimiento"
                       placeholder="Ciudad de Nacimiento"
                       className={`${
-                        touched.ciudadNacimiento &&
+                        (touched.ciudadNacimiento || validacionStepTwo) &&
                         errors.ciudadNacimiento &&
                         "InputError"
                       }`}
@@ -605,7 +728,7 @@ export const Formulario = () => {
                       }}
                     />
                     <StyledError>
-                      {touched.ciudadNacimiento &&
+                      {(touched.ciudadNacimiento || validacionStepTwo) &&
                         errors.ciudadNacimiento &&
                         errors.ciudadNacimiento}
                     </StyledError>
@@ -615,7 +738,7 @@ export const Formulario = () => {
                       name="personaContacto"
                       placeholder="Persona de Contacto"
                       className={`${
-                        touched.personaContacto &&
+                        (touched.personaContacto || validacionStepTwo) &&
                         errors.personaContacto &&
                         "InputError"
                       }`}
@@ -624,7 +747,7 @@ export const Formulario = () => {
                       }}
                     />
                     <StyledError>
-                      {touched.personaContacto &&
+                      {(touched.personaContacto || validacionStepTwo) &&
                         errors.personaContacto &&
                         errors.personaContacto}
                     </StyledError>
@@ -634,7 +757,7 @@ export const Formulario = () => {
                       name="parentezcoContacto"
                       placeholder="Parentezco con el Contacto"
                       className={`${
-                        touched.parentezcoContacto &&
+                        (touched.parentezcoContacto || validacionStepTwo) &&
                         errors.parentezcoContacto &&
                         "InputError"
                       }`}
@@ -643,7 +766,7 @@ export const Formulario = () => {
                       }}
                     />
                     <StyledError>
-                      {touched.parentezcoContacto &&
+                      {(touched.parentezcoContacto || validacionStepTwo) &&
                         errors.parentezcoContacto &&
                         errors.parentezcoContacto}
                     </StyledError>
@@ -653,13 +776,13 @@ export const Formulario = () => {
                       name="telefonoContacto"
                       placeholder="Telefono del Contacto"
                       className={`${
-                        touched.telefonoContacto &&
+                        (touched.telefonoContacto || validacionStepTwo) &&
                         errors.telefonoContacto &&
                         "InputError"
                       }`}
                     />
                     <StyledError>
-                      {touched.telefonoContacto &&
+                      {(touched.telefonoContacto || validacionStepTwo) &&
                         errors.telefonoContacto &&
                         errors.telefonoContacto}
                     </StyledError>
@@ -668,13 +791,19 @@ export const Formulario = () => {
                       id="eps"
                       name="eps"
                       placeholder="EPS"
-                      className={`${touched.eps && errors.eps && "InputError"}`}
+                      className={`${
+                        (touched.eps || validacionStepTwo) &&
+                        errors.eps &&
+                        "InputError"
+                      }`}
                       onInput={(e) => {
                         e.target.value = CapitalizeString(e.target.value);
                       }}
                     />
                     <StyledError>
-                      {touched.eps && errors.eps && errors.eps}
+                      {(touched.eps || validacionStepTwo) &&
+                        errors.eps &&
+                        errors.eps}
                     </StyledError>
                     <Field
                       type="text"
@@ -682,16 +811,38 @@ export const Formulario = () => {
                       name="pension"
                       placeholder="Pension"
                       className={`${
-                        touched.pension && errors.pension && "InputError"
+                        (touched.pension || validacionStepTwo) &&
+                        errors.pension &&
+                        "InputError"
                       }`}
                       onInput={(e) => {
                         e.target.value = CapitalizeString(e.target.value);
                       }}
                     />
                     <StyledError>
-                      {touched.pension && errors.pension && errors.pension}
+                      {(touched.pension || validacionStepTwo) &&
+                        errors.pension &&
+                        errors.pension}
                     </StyledError>
-                    <VoidDiv />
+                    <Field
+                      type="text"
+                      id="arl"
+                      name="arl"
+                      placeholder="ARL"
+                      className={`${
+                        (touched.arl || validacionStepTwo) &&
+                        errors.arl &&
+                        "InputError"
+                      }`}
+                      onInput={(e) => {
+                        e.target.value = CapitalizeString(e.target.value);
+                      }}
+                    />
+                    <StyledError>
+                      {(touched.arl || validacionStepTwo) &&
+                        errors.arl &&
+                        errors.arl}
+                    </StyledError>
                   </>
                 )}
                 {step === 3 && (
@@ -702,7 +853,7 @@ export const Formulario = () => {
                       name="cajaCompensacion"
                       placeholder="Caja de Compensacion"
                       className={`${
-                        touched.cajaCompensacion &&
+                        (touched.cajaCompensacion || validacionStepThree) &&
                         errors.cajaCompensacion &&
                         "InputError"
                       }`}
@@ -711,46 +862,46 @@ export const Formulario = () => {
                       }}
                     />
                     <StyledError>
-                      {touched.cajaCompensacion &&
+                      {(touched.cajaCompensacion || validacionStepThree) &&
                         errors.cajaCompensacion &&
                         errors.cajaCompensacion}
                     </StyledError>
                     <Field
                       type="text"
-                      id="salarioReal"
-                      name="salarioReal"
-                      placeholder="Salario Real"
+                      id="salarioAcordado"
+                      name="salarioAcordado"
+                      placeholder="Salario Acordado"
                       className={`${
-                        touched.salarioReal &&
-                        errors.salarioReal &&
+                        (touched.salarioAcordado || validacionStepThree) &&
+                        errors.salarioAcordado &&
                         "InputError"
                       }`}
                     />
                     <StyledError>
-                      {touched.salarioReal &&
-                        errors.salarioReal &&
-                        errors.salarioReal}
+                      {(touched.salarioAcordado || validacionStepThree) &&
+                        errors.salarioAcordado &&
+                        errors.salarioAcordado}
                     </StyledError>
-                    <Field
+                    {/* <Field
                       type="text"
                       id="salarioCotizado"
                       name="salarioCotizado"
                       placeholder="Salario Cotizado"
                     />
-                    <StyledError />
+                    <StyledError /> */}
                     <Field
                       type="text"
                       id="numeroCuenta"
                       name="numeroCuenta"
                       placeholder="Número de Cuenta Bancaria"
                       className={`${
-                        touched.numeroCuenta &&
+                        (touched.numeroCuenta || validacionStepThree) &&
                         errors.numeroCuenta &&
                         "InputError"
                       }`}
                     />
                     <StyledError>
-                      {touched.numeroCuenta &&
+                      {(touched.numeroCuenta || validacionStepThree) &&
                         errors.numeroCuenta &&
                         errors.numeroCuenta}
                     </StyledError>
@@ -759,21 +910,52 @@ export const Formulario = () => {
                       id="tipoCuenta"
                       name="tipoCuenta"
                       placeholder="Tipo de Cuenta"
+                      component="select"
                       className={`${
-                        touched.tipoCuenta && errors.tipoCuenta && "InputError"
+                        (touched.tipoCuenta || validacionStepThree) &&
+                        errors.tipoCuenta &&
+                        "InputError"
                       }`}
-                      onInput={(e) => {
-                        e.target.value = CapitalizeString(e.target.value);
-                      }}
-                    />
+                    >
+                      <option value="">Tipo de Cuenta</option>
+                      <option value="Cuenta de Ahorros">
+                        Cuenta de Ahorros
+                      </option>
+                      <option value="Cuenta Corriente">Cuenta Corriente</option>
+                    </Field>
                     <StyledError>
-                      {touched.tipoCuenta &&
+                      {(touched.tipoCuenta || validacionStepThree) &&
                         errors.tipoCuenta &&
                         errors.tipoCuenta}
                     </StyledError>
+                    <Field
+                      type="text"
+                      id="tipoContratacion"
+                      name="tipoContratacion"
+                      placeholder="Tipo de Contratación"
+                      component="select"
+                      className={`${
+                        (touched.tipoContratacion || validacionStepThree) &&
+                        errors.tipoContratacion &&
+                        "InputError"
+                      }`}
+                    >
+                      <option value="">Tipo de Contratación</option>
+                      <option value="Indefinido">Indefinido</option>
+                      <option value="Servicios">Servicios</option>
+                      <option value="Freelance">Freelance</option>
+                      <option value="Definido">Definido</option>
+                    </Field>
+                    <StyledError>
+                      {(touched.tipoContratacion || validacionStepThree) &&
+                        errors.tipoContratacion &&
+                        errors.tipoContratacion}
+                    </StyledError>
                     <DivInputFile
                       className={`${
-                        (touched.certificadoBancario || showCertificado) &&
+                        (touched.certificadoBancario ||
+                          validacionStepThree ||
+                          showCertificado) &&
                         errors.certificadoBancario &&
                         "InputError"
                       }`}
@@ -789,7 +971,6 @@ export const Formulario = () => {
                       <p>Certificado Bancario</p>
                       <input
                         hidden
-                        // disabled={uploadHoja? true: false}
                         ref={certificadoRef}
                         type="file"
                         id="certificadoBancario"
@@ -821,13 +1002,17 @@ export const Formulario = () => {
                       )}
                     </DivInputFile>
                     <StyledError>
-                      {(touched.certificadoBancario || showCertificado) &&
+                      {(touched.certificadoBancario ||
+                        validacionStepThree ||
+                        showCertificado) &&
                         errors.certificadoBancario &&
                         errors.certificadoBancario}
                     </StyledError>
                     <DivInputFile
                       className={`${
-                        (touched.hojaDeVida || showHoja) &&
+                        (touched.hojaDeVida ||
+                          validacionStepThree ||
+                          showHoja) &&
                         errors.hojaDeVida &&
                         "InputError"
                       }`}
@@ -842,7 +1027,6 @@ export const Formulario = () => {
                       <p>Hoja de Vida</p>
                       <input
                         hidden
-                        // disabled={uploadCertificado? true: false}
                         ref={hojaRef}
                         type="file"
                         id="hojaDeVida"
@@ -866,7 +1050,9 @@ export const Formulario = () => {
                       )}
                     </DivInputFile>
                     <StyledError>
-                      {(touched.hojaDeVida || showHoja) &&
+                      {(touched.hojaDeVida ||
+                        validacionStepThree ||
+                        showHoja) &&
                         errors.hojaDeVida &&
                         errors.hojaDeVida}
                     </StyledError>
@@ -875,32 +1061,18 @@ export const Formulario = () => {
                       id="portafolio"
                       name="portafolio"
                       placeholder="Link a Portafolio"
-                    />
-                    <StyledError />
-                    <Field
-                      type="text"
-                      id="tipoContratacion"
-                      name="tipoContratacion"
-                      placeholder="Tipo de Contratación"
-                      component="select"
                       className={`${
-                        touched.tipoContratacion &&
-                        errors.tipoContratacion &&
+                        (touched.portafolio || validacionStepThree) &&
+                        errors.portafolio &&
                         "InputError"
                       }`}
-                    >
-                      <option value="">Tipo de Contratación</option>
-                      <option value="Indefinido">Indefinido</option>
-                      <option value="Servicios">Servicios</option>
-                      <option value="Freelance">Freelance</option>
-                      <option value="Definido">Definido</option>
-                    </Field>
+                    />
                     <StyledError>
-                      {touched.tipoContratacion &&
-                        errors.tipoContratacion &&
-                        errors.tipoContratacion}
+                      {(touched.portafolio || validacionStepThree) &&
+                        errors.portafolio &&
+                        errors.portafolio}
                     </StyledError>
-                    <DivInputFile>
+                    {/* <DivInputFile>
                       <p>Vinculado</p>
                       <Field
                         type="checkbox"
@@ -908,17 +1080,29 @@ export const Formulario = () => {
                         name="vinculado"
                         placeholder="Vinculado"
                         className={"show"}
-                        // onClick={(e) => {
-                        //   console.log(typeof e.target.value);
-
-                        // }}
                       />
-                    </DivInputFile>
+                    </DivInputFile> */}
+                    <Field
+                      type="text"
+                      id="repositorio"
+                      name="repositorio"
+                      placeholder="Link a Repositorio"
+                      className={`${
+                        (touched.repositorio || validacionStepThree) &&
+                        errors.repositorio &&
+                        "InputError"
+                      }`}
+                    />
+                    <StyledError>
+                      {(touched.repositorio || validacionStepThree) &&
+                        errors.repositorio &&
+                        errors.repositorio}
+                    </StyledError>
                   </>
                 )}
                 {step === 4 && (
                   <>
-                    <Row>
+                    {/* <Row>
                       <Col>
                         <span>Correo</span>
                       </Col>
@@ -929,7 +1113,7 @@ export const Formulario = () => {
                           <p>{values.correo}</p>
                         )}
                       </Col>
-                    </Row>
+                    </Row> */}
                     <Row>
                       <Col>
                         <span>Cédula</span>
@@ -1147,21 +1331,21 @@ export const Formulario = () => {
                         <span>Salario Real</span>
                       </Col>
                       <Col>
-                        {errors.salarioReal ? (
-                          <StyledError>{errors.salarioReal}</StyledError>
+                        {errors.salarioAcordado ? (
+                          <StyledError>{errors.salarioAcordado}</StyledError>
                         ) : (
-                          <p>{values.salarioReal}</p>
+                          <p>{values.salarioAcordado}</p>
                         )}
                       </Col>
                     </Row>
-                    <Row>
+                    {/* <Row>
                       <Col>
                         <span>Salario Cotizado</span>
                       </Col>
                       <Col>
                         <p>{values.salarioCotizado}</p>
                       </Col>
-                    </Row>
+                    </Row> */}
                     <Row>
                       <Col>
                         <span>Número de Cuenta Bancaria</span>
@@ -1183,6 +1367,18 @@ export const Formulario = () => {
                           <StyledError>{errors.tipoCuenta}</StyledError>
                         ) : (
                           <p>{values.tipoCuenta}</p>
+                        )}
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <span>Tipo de Contratación</span>
+                      </Col>
+                      <Col>
+                        {errors.tipoContratacion ? (
+                          <StyledError>{errors.tipoContratacion}</StyledError>
+                        ) : (
+                          <p>{values.tipoContratacion}</p>
                         )}
                       </Col>
                     </Row>
@@ -1222,22 +1418,10 @@ export const Formulario = () => {
                     </Row>
                     <Row>
                       <Col>
-                        <span>Tipo de Contratación</span>
+                        <span>Link a Repositorio</span>
                       </Col>
                       <Col>
-                        {errors.tipoContratacion ? (
-                          <StyledError>{errors.tipoContratacion}</StyledError>
-                        ) : (
-                          <p>{values.tipoContratacion}</p>
-                        )}
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-                        <span>Vinculado</span>
-                      </Col>
-                      <Col>
-                        {values.vinculado ? <p>Sí</p> : <p>No</p>}
+                        <p>{values.repositorio}</p>
                       </Col>
                     </Row>
                   </>
@@ -1255,6 +1439,8 @@ export const Formulario = () => {
                     {step === 4 && (
                       <Button
                         type="submit"
+                        id="submit-button"
+                        name="submit-button"
                         style={{ backgroundColor: done && "#9CCA1F" }}
                       >
                         {done ? (
@@ -1275,7 +1461,60 @@ export const Formulario = () => {
                       </Button>
                     )}
                     {step !== 4 && (
-                      <Button type="button" onClick={handleSiguiente}>
+                      <Button
+                        type="button"
+                        id="nextButton"
+                        name="nextButton"
+                        onMouseEnter={handleBlur}
+                        onClick={() => {
+                          if (step === 1) {
+                            setValidacionStepOne(true);
+                          }
+
+                          if (step === 2) {
+                            setValidacionStepTwo(true);
+                          }
+
+                          if (step === 3) {
+                            setValidacionStepThree(true);
+                          }
+
+                          step === 1 &&
+                            values.cedula &&
+                            values.fechaNacimiento &&
+                            values.nombres &&
+                            values.apellidos &&
+                            values.emailcorp &&
+                            values.emailalt &&
+                            values.skype &&
+                            values.direccion &&
+                            values.ciudadResidencia &&
+                            values.telefono &&
+                            handleSiguiente();
+
+                          step === 2 &&
+                            values.celular &&
+                            values.fechaIngreso &&
+                            values.ciudadNacimiento &&
+                            values.personaContacto &&
+                            values.parentezcoContacto &&
+                            values.telefonoContacto &&
+                            values.eps &&
+                            values.pension &&
+                            // values.arl &&
+                            handleSiguiente();
+
+                          step === 3 &&
+                            values.numeroCuenta &&
+                            values.tipoCuenta &&
+                            values.tipoContratacion &&
+                            values.certificadoBancario &&
+                            values.hojaDeVida &&
+                            values.portafolio &&
+                            values.repositorio &&
+                            handleSiguiente();
+                        }}
+                      >
                         <p>Siguiente</p> <FaChevronRight />
                       </Button>
                     )}
